@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+
+    <meta charset="utf-8">
+    <link type="text/css" rel="stylesheet" href="../common/css/batch.css" data-wrm-key="_super" data-wrm-batch-type="context" media="all">
+
+
+
+    <title>问题导航器 - JIRA</title>
+    <link rel="search" type="application/opensearchdescription+xml" href="/osd.jsp" title="问题导航器 - JIRA"/>
+
+</head>
+
+
+
+
+
+<body id="jira" class="aui-layout aui-theme-default ka ajax-issue-search-and-view page-type-navigator" data-version="7.6.3">
+<div id="page">
+    <header id="header" role="banner">
+
+
+
+
+        <nav class="aui-header aui-dropdown2-trigger-group" role="navigation"><div class="aui-header-inner"><div class="aui-header-primary"><h1 id="logo" class="aui-header-logo aui-header-logo-custom"><a href="http://192.168.6.23:8080/secure/MyJiraHome.jspa"><img src="../common/img/icon-jira-logo.png" alt="JIRA" /></a></h1><ul class='aui-nav'><li><a href="/secure/Dashboard.jspa" class=" aui-nav-link aui-dropdown2-trigger aui-dropdown2-ajax" id="home_link" aria-haspopup="true" aria-controls="home_link-content" title="查看和管理您的仪表板" accesskey="D">仪表板</a><div class="aui-dropdown2 aui-style-default" id="home_link-content" data-aui-dropdown2-ajax-key="home_link"></div></li><li><a href="/browse/SCYP" class=" aui-nav-link aui-dropdown2-trigger aui-dropdown2-ajax" id="browse_link" aria-haspopup="true" aria-controls="browse_link-content" title="查看最近项目和浏览项目列表" accesskey="优先级">项目</a><div class="aui-dropdown2 aui-style-default" id="browse_link-content" data-aui-dropdown2-ajax-key="browse_link"></div></li><li><a href="/issues/" class=" aui-nav-link aui-dropdown2-trigger aui-dropdown2-ajax" id="find_link" aria-haspopup="true" aria-controls="find_link-content" title="搜索问题和查看最近问题" accesskey="我">问题</a><div class="aui-dropdown2 aui-style-default" id="find_link-content" data-aui-dropdown2-ajax-key="find_link"></div></li><li><a href="/secure/RapidBoard.jspa" class=" aui-nav-link aui-dropdown2-trigger aui-dropdown2-ajax" id="greenhopper_menu" aria-haspopup="true" aria-controls="greenhopper_menu-content" title="使用JIRA Software管理您的项目">面板</a><div class="aui-dropdown2 aui-style-default" id="greenhopper_menu-content" data-aui-dropdown2-ajax-key="greenhopper_menu"></div></li>
+            <li id="create-menu"><a  id="create_link"  class="aui-button aui-button-primary aui-style create-issue "  title="创建一个新的问题/缺陷/需求等等" href="/secure/CreateIssue!default.jspa" accesskey="C">新建</a></li></ul></div><div class="aui-header-secondary"><ul class='aui-nav'><li id="quicksearch-menu">
+            <form action="/secure/QuickSearch.jspa" method="get" id="quicksearch" class="aui-quicksearch dont-default-focus ajs-dirty-warning-exempt">
+                <input id="quickSearchInput" class="search" type="text" title="搜索" placeholder="搜索" name="searchString" accessKey="Q" />
+                <input type="submit" class="hidden" value="Search">
+            </form>
+        </li>
+            <li><a class="jira-feedback-plugin" role="button" aria-haspopup="true" id="jira-header-feedback-link" href="#"><span class="aui-icon aui-icon-small jira-feedback-plugin-icon">向Atlassian提供您的反馈</span></a></li>
+
+
+
+            <li id="system-help-menu">
+                <a class="aui-nav-link aui-dropdown2-trigger" id="help_menu" aria-haspopup="true" aria-owns="system-help-menu-content" href="https://docs.atlassian.com/jira/jsw-docs-076/"  target="$textUtils.htmlEncode($rootHelpMenuItem.params.target)"  title="帮助"><span class="aui-icon aui-icon-small aui-iconfont-help">帮助</span></a>
+                <div id="system-help-menu-content" class="aui-dropdown2 aui-style-default">
+                    <div class="aui-dropdown2-section">
+                        <ul id="jira-help" class="aui-list-truncate">
+                            <li>
+                                <a id="gh_view_help" class="aui-nav-link " title="获取JIRA Software的在线帮助" href="https://docs.atlassian.com/jira/jsw-docs-076/"  target="_blank" >JIRA Software帮助</a>
+                            </li>
+                            <li>
+                                <a id="view_core_help" class="aui-nav-link " title="前往获取JIRA Core的在线文档" href="https://docs.atlassian.com/jira/jcore-docs-076/"  target="_blank" >JIRA Core 帮助</a>
+                            </li>
+                            <li>
+                                <a id="view_admin_help" class="aui-nav-link " title="前往查看最新的JIRA管理文档" href="https://docs.atlassian.com/jira/jadm-docs-076/"  target="_blank" >JIRA 管理员帮助</a>
+                            </li>
+                            <li>
+                                <a id="keyshortscuthelp" class="aui-nav-link " title="获得更多JIRA快捷键信息" href="/secure/ViewKeyboardShortcuts!default.jspa"  target="_blank" >快捷键</a>
+                            </li>
+                            <li>
+                                <a id="view_about" class="aui-nav-link " title="获取 JIRA 的更多信息" href="/secure/AboutPage.jspa" >关于 JIRA</a>
+                            </li>
+                            <li>
+                                <a id="view_credits" class="aui-nav-link " title="查看开发Jira的研发团队" href="/secure/JiraCreditsPage!default.jspa"  target="_blank" >JIRA 研发团队</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+
+
+            <li id="system-admin-menu">
+                <a href="/plugins/servlet/applications/versions-licenses" id="admin_menu" class="aui-nav-link aui-dropdown2-trigger" aria-haspopup="true" aria-owns="system-admin-menu-content" title="管理"><span class="aui-icon aui-icon-small aui-iconfont-configure">管理</span></a>
+                <div id="system-admin-menu-content" class="aui-dropdown2 aui-style-default">
+                    <div class="aui-dropdown2-section">
+                        <strong>JIRA管理</strong>
+                        <ul class="aui-list-truncate">
+                            <li>
+                                <a href="/plugins/servlet/applications/versions-licenses" class="aui-nav-link" id="admin_applications_menu" >应用程序</a>
+                            </li>
+                            <li>
+                                <a href="/secure/project/ViewProjects.jspa" class="aui-nav-link" id="admin_project_menu" >项目</a>
+                            </li>
+                            <li>
+                                <a href="/secure/admin/ViewIssueTypes.jspa" class="aui-nav-link" id="admin_issues_menu" >问题</a>
+                            </li>
+                            <li>
+                                <a href="/plugins/servlet/upm/marketplace" class="aui-nav-link" id="admin_plugins_menu" >插件</a>
+                            </li>
+                            <li>
+                                <a href="/secure/admin/user/UserBrowser.jspa" class="aui-nav-link" id="admin_users_menu" >用户管理</a>
+                            </li>
+                            <li>
+                                <a href="/secure/PostUpgradeLandingPage.jspa" class="aui-nav-link" id="admin_pulp_menu" >最新升级报告</a>
+                            </li>
+                            <li>
+                                <a href="/secure/admin/ViewApplicationProperties.jspa" class="aui-nav-link" id="admin_system_menu" >系统</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+
+
+
+
+
+
+
+
+            <li id="user-options">
+                <a id="header-details-user-fullname" class="aui-dropdown2-trigger" aria-haspopup="true" aria-owns="user-options-content" data-username="huajun.zhang" data-displayname="华君 张" href="/secure/ViewProfile.jspa" title="华君 张的个人信息">
+            <span class="aui-avatar aui-avatar-small">
+                <span class="aui-avatar-inner">
+                    <img src="http://192.168.6.23:8080/secure/useravatar?size=small&avatarId=10341" alt="华君 张的个人信息"/>
+                </span>
+            </span>
+                </a>
+                <div id="user-options-content" class="aui-dropdown2 aui-style-default">
+                    <div class="aui-dropdown2-section">
+                        <ul id="personal" class="aui-list-truncate">
+                            <li>
+                                <a  id="view_profile"   class=""  title="查看和修改您的详细情况和配置" href="/secure/ViewProfile.jspa">用户信息</a>
+                            </li>
+                            <li>
+                                <a  id="upm-requests-link"   class=""   href="/plugins/servlet/upm/requests?source=header_user">Atlassian Marketplace</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="aui-dropdown2-section">
+                        <strong>我的JIRA主页</strong>
+                        <ul id="set_my_jira_home" class="aui-list-truncate">
+                            <li>
+                                <a  id="set_my_jira_home_default"  class="aui-dropdown2-radio interactive    " title="将我的JIRA主页设置到此仪表板。" href="/secure/UpdateMyJiraHome.jspa?target=com.atlassian.jira.jira-my-home-plugin%3Aset_my_jira_home_dashboard&atl_token=BQCF-IXNC-TSBY-PTCZ|1a899e33d7bed3a21748b534e988609ea78494d2|lin">仪表板</a>
+                            </li>
+                            <li>
+                                <a  id="greenhopper-my-jira-home-set"  class="aui-dropdown2-radio interactive checked    " title="设置 JIRA主页为面板。" href="/secure/UpdateMyJiraHome.jspa?target=com.pyxis.greenhopper.jira%3Agreenhopper-my-jira-home-set-51&atl_token=BQCF-IXNC-TSBY-PTCZ|1a899e33d7bed3a21748b534e988609ea78494d2|lin">面板</a>
+                            </li>
+                            <li>
+                                <a  id="set_my_jira_home_issuenav"  class="aui-dropdown2-radio interactive    " title="设置我的JIRA主页到问题导航器。" href="/secure/UpdateMyJiraHome.jspa?target=com.atlassian.jira.jira-my-home-plugin%3Aset_my_jira_home_issue&atl_token=BQCF-IXNC-TSBY-PTCZ|1a899e33d7bed3a21748b534e988609ea78494d2|lin">问题导航器</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="aui-dropdown2-section">
+                        <ul id="system" class="aui-list-truncate">
+                            <li>
+                                <a  id="log_out"   class=""  title="注销身份并且取消任何自动登录。" href="/logout?atl_token=BQCF-IXNC-TSBY-PTCZ|1a899e33d7bed3a21748b534e988609ea78494d2|lin">注销</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        </ul></div></div><!-- .aui-header-inner--></nav><!-- .aui-header -->
+    </header>
+
+
+
+
+    <section id="content" role="main">
+
+        <div class="navigator-container ">
+
+
+            <div class="navigator-sidebar ui-sidebar-scrollable" id="navigator-sidebar" style="width: 200px;">
+                <div class="ui-sidebar-content">
+                    <div class="filters-content">
+                        <h4 class="filter-title">筛选器<a class="aui-button aui-button-subtle ui-undock" href="#" original-title="取消停靠筛选器面板，即当它没有被关注时（输入“[”）将会自动隐藏"><span class="icon">取消停靠</span></a></h4>
+                        <ul class="filter-options">
+                            <li><a href="/issues/?jql=" class="new-search aui-button aui-button-light" title="创建新的搜索筛选器">新筛选器</a></li>
+                            <li><a class="find-filters" href="/secure/ManageFilters.jspa?filterView=search">搜索筛选器</a>
+                            </li>
+                        </ul>
+                        <div class="filter-panel-wrapper" style="max-height: 385px;">
+                            <div class="filter-panel-system-container">
+                                <div class="filter-panel-section"><div class="filter-content">
+                                    <ul class="saved-filter filter-list system-filters">
+                                        <li><a class="filter-link" href="/issues/?filter=-1" data-id="-1" title="我未完成的问题">我未完成的问题</a></li>
+                                        <li><a class="filter-link" href="/issues/?filter=-2" data-id="-2" title="我的报告">我的报告</a></li>
+                                        <li><a class="filter-link" href="/issues/?filter=-4" data-id="-4" title="所有问题">所有问题</a></li>
+                                    </ul>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="filter-panel-favourites-container">
+                                <div class="filter-panel-section"><h4 class="filter-title">保存的筛选器</h4>
+                                    <div class="filter-content">
+                                        <ul class="saved-filter filter-list favourite-filters">
+                                            <li><a class="filter-link" href="/issues/?filter=10302" data-id="10302" title="CYP-高优先级">CYP-高优先级</a><a href="#" class="filter-actions" data-id="10302"><span>筛选器操作</span></a></li>
+                                            <li><a class="filter-link" href="/issues/?filter=10300" data-id="10300" title="CYP未解决问题">CYP未解决问题</a><a href="#" class="filter-actions" data-id="10300"><span>筛选器操作</span></a></li>
+                                            <li><a class="filter-link active" href="/issues/?filter=10400" data-id="10400" title="SCYP-未解决问题(2019)">SCYP-未解决问题(2019)</a><a href="#" class="filter-actions" data-id="10400"><span>筛选器操作</span></a></li>
+                                            <li><a class="filter-link" href="/issues/?filter=10305" data-id="10305" title="SCYP-最近解决问题">SCYP-最近解决问题</a><a href="#" class="filter-actions" data-id="10305"><span>筛选器操作</span></a></li>
+                                            <li><a class="filter-link" href="/issues/?filter=10301" data-id="10301" title="SCYP未解决问题">SCYP未解决问题</a><a href="#" class="filter-actions" data-id="10301"><span>筛选器操作</span></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-sidebar ui-draggable" style="position: absolute; left: 200px;"></div>
+            </div>
+
+
+            <div class="navigator-body">
+                <div class="contained-content">
+
+                    <header class="saved-search-selector">
+                        <div class="saved-search-operations operations">
+                            <a href="" id="jira-share-trigger" class="aui-button aui-button-subtle issuenav-share no-icon" tabindex="0" original-title=""><span class="aui-icon aui-icon-small aui-iconfont-share">发电邮把这个筛选器共享给其他用户 </span><span class="aui-button-label">共享</span></a>
+                            <button class="aui-button aui-button-subtle header-views header-operations" original-title="" id="AJS_DROPDOWN__17" aria-controls="AJS_DROPDOWN__17_drop" aria-haspopup="true" aria-expanded="false"><span class="aui-icon aui-icon-small aui-iconfont-export"></span><span class="aui-button-label">导出</span></button>
+                            <button class="aui-button aui-button-subtle header-tools header-operations" original-title="" id="AJS_DROPDOWN__16" aria-controls="AJS_DROPDOWN__16_drop" aria-haspopup="true" aria-expanded="false"><span class="aui-icon aui-icon-small aui-iconfont-configure"></span><span class="aui-button-label">工具</span></button>
+
+                            <div class="hidden operations-view-data">
+                                <fieldset class="hidden parameters"><input id="filterId" value="10302" type="hidden"><input id="jql" value="" type="hidden"></fieldset>
+                            </div>
+                        </div>
+                        <span id="throbber-space" class="icon throbber"></span>
+                        <div id="search-header-view"><div class="header-section-primary"><h1 class="search-title" title="CYP-高优先级">CYP-高优先级</h1><ul class="filter-operations"><li><button class="aui-button aui-button-light save-as-new-filter">保存为</button></li><li><a href="#" title="查看关于此筛选器的信息" class="show-filter-details">详情</a></li><li><a href="#" class="fav-link aui-icon aui-icon-small aui-iconfont-star" original-title="从您的收藏筛选器中删除此筛选器">从您的收藏筛选器中删除此筛选器</a></li></ul></div></div>
+                    </header>
+
+
+
+                    <form class="navigator-search query-component generic-styled"><div class="aui-group"><div class="aui-item search-wrap"><div class="search-container" data-mode="basic"><div class="search-field-container"><div class="search-criteria-container"><div class="search-criteria"><ul class="criteria-list"><li data-id="project" class="" original-title=""><button type="button" data-id="project" class="criteria-selector aui-button aui-button-subtle drop-arrow"><div class="criteria-wrap">                    <div class="searcherValue">
+
+            <span id="fieldpid" class="fieldValue">
+
+                策赢网络平台                    </span></div>
+                    </div></button><a href="#" class="remove-filter hidden" title="清除条件" tabindex="-1"><span class="aui-icon aui-icon-small aui-iconfont-remove"></span></a></li><li data-id="issuetype" class="" original-title=""><button type="button" data-id="issuetype" class="criteria-selector aui-button aui-button-subtle drop-arrow"><div class="criteria-wrap"><span class="fieldLabel">类型:</span> 全部</div></button><a href="#" class="remove-filter hidden" title="清除条件" tabindex="-1"><span class="aui-icon aui-icon-small aui-iconfont-remove"></span></a></li><li data-id="status" class="" original-title=""><button type="button" data-id="status" class="criteria-selector aui-button aui-button-subtle drop-arrow"><div class="criteria-wrap">                <div class="searcherValue">
+
+            <span id="fieldstatus" class="fieldValue">
+
+                        开放,                                 处理中,                                 已分配,                                 Resolving            </span></div>
+                    </div></button><a href="#" class="remove-filter hidden" title="清除条件" tabindex="-1"><span class="aui-icon aui-icon-small aui-iconfont-remove"></span></a></li><li data-id="assignee" class="" original-title=""><button type="button" data-id="assignee" class="criteria-selector aui-button aui-button-subtle drop-arrow"><div class="criteria-wrap"><span class="fieldLabel">经办人:</span> 全部</div></button><a href="#" class="remove-filter hidden" title="清除条件" tabindex="-1"><span class="aui-icon aui-icon-small aui-iconfont-remove"></span></a></li><li class="text-query"><div class="text-query-container"><input class="search-entry text ajs-dirty-warning-exempt" id="searcher-query" name="text" placeholder="包含文本" type="text"></div></li><li class="criteria-actions"><button type="button" class="add-criteria aui-button aui-button-subtle drop-arrow" style="display: inline-block;" original-title="添加更多的域来搜索">更多</button></li><li><button class="aui-button aui-button-subtle search-button" type="button" original-title="搜索问题"><span class="aui-icon aui-icon-small aui-iconfont-search">搜索</span></button></li></ul></div><div class="search-criteria-extended"><ul class="criteria-list"><li data-id="priority" class="extended-searcher" original-title=""><button type="button" data-id="priority" class="criteria-selector aui-button aui-button-subtle drop-arrow"><div class="criteria-wrap"><span class="fieldLabel">优先级:</span>                 <div class="searcherValue">
+
+            <span id="fieldpriority" class="fieldValue">
+
+                        Highest            </span></div>
+                    </div></button><a href="#" class="remove-filter" title="清除条件" tabindex="-1"><span class="aui-icon aui-icon-small aui-iconfont-remove"></span></a></li></ul></div></div></div><div class="search-options-container"><div class="mode-switcher"><a href="#" class="switcher-item active " data-id="basic" original-title="切换到使用JQL的高级搜索">高级</a><a href="#" class="switcher-item " data-id="advanced" title="切换到基本搜索">简单</a></div></div></div><div class="save-filter-controls"></div></div><div class="aui-item view-selector" id="layout-switcher-toggle"><div class="aui-buttons"><button id="layout-switcher-button" class="aui-button aui-button-light drop-arrow js-default-dropdown" type="button" original-title="" resolved="" aria-controls="layout-switcher-button_drop" aria-haspopup="true" aria-expanded="false"><span class="aui-icon aui-icon-small aui-iconfont-view-table">切换搜索结果视窗</span></button><div class="aui-list hidden"><h5>查看</h5><ul class="aui-list-section aui-first aui-last"><li class="aui-list-item layout-switcher-item"><a href="#" class="aui-list-item-link" data-layout-key="list-view"><span class="aui-icon aui-icon-small aui-iconfont-success"></span>列表</a></li><li class="aui-list-item layout-switcher-item"><a href="#" class="aui-list-item-link" data-layout-key="split-view"><span class="aui-icon aui-icon-small "></span>详细视图</a></li></ul></div></div></div></div><div class="notifications"></div></form>
+
+
+
+
+                    <div class="navigator-group">
+                        <div class="results-panel navigator-item">
+                            <div class="navigator-content" data-issue-table-model-state="{&quot;issueTable&quot;:{&quot;columnSortJql&quot;:{&quot;summary&quot;:&quot;project = SCYP AND status in (Open, \&quot;In Progress\&quot;, Assigned, Resolving) AND created >= 2018-11-01 AND assignee in (xinhuan.yang, haiyun.huang, huajun.zhang, dongfang.li) ORDER BY summary ASC, created DESC&quot;,&quot;issuetype&quot;:&quot;project = SCYP AND status in (Open, \&quot;In Progress\&quot;, Assigned, Resolving) AND created >= 2018-11-01 AND assignee in (xinhuan.yang, haiyun.huang, huajun.zhang, dongfang.li) ORDER BY issuetype DESC, created DESC&quot;,&quot;issuekey&quot;:&quot;project = SCYP AND status in (Open, \&quot;In Progress\&quot;, Assigned, Resolving) AND created >= 2018-11-01 AND assignee in (xinhuan.yang, haiyun.huang, huajun.zhang, dongfang.li) ORDER BY key ASC, created DESC&quot;,&quot;created&quot;:&quot;project = SCYP AND status in (Open, \&quot;In Progress\&quot;, Assigned, Resolving) AND created >= 2018-11-01 AND assignee in (xinhuan.yang, haiyun.huang, huajun.zhang, dongfang.li) ORDER BY created ASC&quot;,&quot;reporter&quot;:&quot;project = SCYP AND status in (Open, \&quot;In Progress\&quot;, Assigned, Resolving) AND created >= 2018-11-01 AND assignee in (xinhuan.yang, haiyun.huang, huajun.zhang, dongfang.li) ORDER BY reporter ASC, created DESC&quot;,&quot;assignee&quot;:&quot;project = SCYP AND status in (Open, \&quot;In Progress\&quot;, Assigned, Resolving) AND created >= 2018-11-01 AND assignee in (xinhuan.yang, haiyun.huang, huajun.zhang, dongfang.li) ORDER BY assignee ASC, created DESC&quot;,&quot;priority&quot;:&quot;project = SCYP AND status in (Open, \&quot;In Progress\&quot;, Assigned, Resolving) AND created >= 2018-11-01 AND assignee in (xinhuan.yang, haiyun.huang, huajun.zhang, dongfang.li) ORDER BY priority DESC, created DESC&quot;,&quot;resolution&quot;:&quot;project = SCYP AND status in (Open, \&quot;In Progress\&quot;, Assigned, Resolving) AND created >= 2018-11-01 AND assignee in (xinhuan.yang, haiyun.huang, huajun.zhang, dongfang.li) ORDER BY resolution ASC, created DESC&quot;,&quot;updated&quot;:&quot;project = SCYP AND status in (Open, \&quot;In Progress\&quot;, Assigned, Resolving) AND created >= 2018-11-01 AND assignee in (xinhuan.yang, haiyun.huang, huajun.zhang, dongfang.li) ORDER BY updated DESC, created DESC&quot;,&quot;status&quot;:&quot;project = SCYP AND status in (Open, \&quot;In Progress\&quot;, Assigned, Resolving) AND created >= 2018-11-01 AND assignee in (xinhuan.yang, haiyun.huang, huajun.zhang, dongfang.li) ORDER BY status DESC, created DESC&quot;},&quot;description&quot;:&quot;&quot;,&quot;displayed&quot;:50,&quot;end&quot;:50,&quot;issueIds&quot;:[11628,11627,11621,11618,11612,11606,11605,11603,11602,11590,11583,11573,11572,11571,11567,11561,11557,11540,11538,11530,11527,11526,11525,11500,11499,11486,11462,11458,11454,11450,11440,11431,11400,11335,11333,11317,11308,11274,11268,11263,11256,11225,11224,11212,11195,11194,11185,11184,11182,11180,11175,11127,11126,11111,11101],&quot;issueKeys&quot;:[&quot;SCYP-736&quot;,&quot;SCYP-735&quot;,&quot;SCYP-729&quot;,&quot;SCYP-726&quot;,&quot;SCYP-720&quot;,&quot;SCYP-714&quot;,&quot;SCYP-713&quot;,&quot;SCYP-711&quot;,&quot;SCYP-710&quot;,&quot;SCYP-698&quot;,&quot;SCYP-691&quot;,&quot;SCYP-681&quot;,&quot;SCYP-680&quot;,&quot;SCYP-679&quot;,&quot;SCYP-675&quot;,&quot;SCYP-669&quot;,&quot;SCYP-665&quot;,&quot;SCYP-648&quot;,&quot;SCYP-646&quot;,&quot;SCYP-638&quot;,&quot;SCYP-635&quot;,&quot;SCYP-634&quot;,&quot;SCYP-633&quot;,&quot;SCYP-610&quot;,&quot;SCYP-609&quot;,&quot;SCYP-596&quot;,&quot;SCYP-572&quot;,&quot;SCYP-568&quot;,&quot;SCYP-564&quot;,&quot;SCYP-560&quot;,&quot;SCYP-550&quot;,&quot;SCYP-541&quot;,&quot;SCYP-510&quot;,&quot;SCYP-509&quot;,&quot;SCYP-507&quot;,&quot;SCYP-491&quot;,&quot;SCYP-482&quot;,&quot;SCYP-448&quot;,&quot;SCYP-442&quot;,&quot;SCYP-438&quot;,&quot;SCYP-431&quot;,&quot;SCYP-400&quot;,&quot;SCYP-399&quot;,&quot;SCYP-387&quot;,&quot;SCYP-370&quot;,&quot;SCYP-369&quot;,&quot;SCYP-360&quot;,&quot;SCYP-359&quot;,&quot;SCYP-357&quot;,&quot;SCYP-355&quot;,&quot;SCYP-350&quot;,&quot;SCYP-303&quot;,&quot;SCYP-302&quot;,&quot;SCYP-287&quot;,&quot;SCYP-277&quot;],&quot;jiraHasIssues&quot;:true,&quot;page&quot;:0,&quot;pageSize&quot;:50,&quot;startIndex&quot;:0,&quot;title&quot;:&quot;&quot;,&quot;total&quot;:55,&quot;url&quot;:&quot;&quot;,&quot;sortBy&quot;:{&quot;fieldId&quot;:&quot;created&quot;,&quot;fieldName&quot;:&quot;创建日期&quot;,&quot;order&quot;:&quot;DESC&quot;,&quot;toggleJql&quot;:&quot;project = SCYP AND status in (Open, \&quot;In Progress\&quot;, Assigned, Resolving) AND created >= 2018-11-01 AND assignee in (xinhuan.yang, haiyun.huang, huajun.zhang, dongfang.li) ORDER BY created ASC&quot;},&quot;columns&quot;:[&quot;issuetype&quot;,&quot;issuekey&quot;,&quot;summary&quot;,&quot;assignee&quot;,&quot;reporter&quot;,&quot;priority&quot;,&quot;status&quot;,&quot;resolution&quot;,&quot;created&quot;,&quot;updated&quot;],&quot;columnConfig&quot;:&quot;FILTER&quot;},&quot;warnings&quot;:[]}" data-session-search-state="" data-selected-issue=""><div><div class="list-view"><div class="aui-group aui-group-split issue-table-info-bar"><div class="aui-item"><span class="results-count-text"><span class="results-count-start">1</span>–<span class="results-count-end">3</span> 个问题，共 <span class="results-count-total results-count-link">3</span> 个</span><a href="#" class="refresh-table" title="刷新结果"><span class="aui-icon aui-icon-small aui-iconfont-refresh-small">刷新结果</span></a></div><div class="aui-item"><div class="column-picker-trigger-container"><button class="aui-button aui-button-subtle column-picker-trigger" title="列">列</button></div></div></div><div class="issue-table-container"><div><issuetable-web-component resolved="">
+                                <table id="issuetable"><thead><tr class="rowHeader"><th class="colHeaderLink sortable headerrow-issuetype" rel="issuetype:DESC" data-id="issuetype" onclick="window.document.location='/issues/?jql=ORDER%20BY%20%22issuetype%22%20DESC'">
+                                    <span title="排序 问题类型">T</span>
+                                </th><th class="colHeaderLink sortable headerrow-issuekey" rel="issuekey:ASC" data-id="issuekey" onclick="window.document.location='/issues/?jql=ORDER%20BY%20%22issuekey%22%20ASC'">
+                                    <span title="排序 关键字">关键字</span>
+                                </th><th class="colHeaderLink sortable headerrow-summary" rel="summary:ASC" data-id="summary" onclick="window.document.location='/issues/?jql=ORDER%20BY%20%22summary%22%20ASC'">
+                                    <span title="排序 概要">概要</span>
+                                </th><th class="active sortable ascending headerrow-assignee" rel="assignee:DESC" data-id="assignee" onclick="window.document.location='/issues/?jql=ORDER%20BY%20%22assignee%22%20DESC'" title="升序- 点击点降序排序">
+                                    <span title="排序 经办人">经办人</span>
+                                    <span class="aui-icon aui-icon-small aui-iconfont-up issuetable-header-sort-icon"></span>
+                                </th><th class="colHeaderLink sortable headerrow-reporter" rel="reporter:ASC" data-id="reporter" onclick="window.document.location='/issues/?jql=ORDER%20BY%20%22reporter%22%20ASC'">
+                                    <span title="排序 报告人">报告人</span>
+                                </th><th class="colHeaderLink sortable headerrow-priority" rel="priority:DESC" data-id="priority" onclick="window.document.location='/issues/?jql=ORDER%20BY%20%22priority%22%20DESC'">
+                                    <span title="排序 优先级">优先级</span>
+                                </th><th class="colHeaderLink sortable headerrow-status" rel="status:DESC" data-id="status" onclick="window.document.location='/issues/?jql=ORDER%20BY%20%22status%22%20DESC'">
+                                    <span title="排序 状态">状态</span>
+                                </th><th class="colHeaderLink sortable headerrow-resolution" rel="resolution:ASC" data-id="resolution" onclick="window.document.location='/issues/?jql=ORDER%20BY%20%22resolution%22%20ASC'">
+                                    <span title="排序 解决结果">解决结果</span>
+                                </th><th class="colHeaderLink sortable headerrow-created" rel="created:DESC" data-id="created" onclick="window.document.location='/issues/?jql=ORDER%20BY%20%22created%22%20DESC'">
+                                    <span title="排序 创建日期">创建日期</span>
+                                </th><th class="colHeaderLink sortable headerrow-updated" rel="updated:DESC" data-id="updated" onclick="window.document.location='/issues/?jql=ORDER%20BY%20%22updated%22%20DESC'">
+                                    <span title="排序 已更新">已更新</span>
+                                </th><th class="colHeaderLink headerrow-actions">
+
+                                </th></tr></thead><tbody class="ui-sortable"><tr id="issuerow11521" rel="11521" data-issuekey="CYP-567" class="issuerow focused issue-table-draggable"><td class="issuetype"><a class="hidden-link issue-link" data-issue-key="CYP-567" href="/browse/CYP-567" tabindex="-1" title="CYP-567"></a>     <a class="issue-link" data-issue-key="CYP-567" href="/browse/CYP-567">
+                                    <img src="http://192.168.6.23:8080/secure/viewavatar?size=xsmall&amp;avatarId=10318&amp;avatarType=issuetype" alt="任务" title="任务 - 需要完成的任务。" width="16" height="16" border="0" align="absmiddle">
+                                </a>
+                                </td><td class="issuekey">
+
+                                    <a class="issue-link" data-issue-key="CYP-567" href="/browse/CYP-567">CYP-567</a>
+                                </td><td class="summary"><p>
+                                    <a class="issue-link" data-issue-key="CYP-567" href="/browse/CYP-567">报价时，只填写“预计还款日期”，利率修改为非必填项</a>
+                                </p>
+                                </td><td class="assignee">            <span class="tinylink"><a class="user-hover" rel="dongfang.li" id="assignee_dongfang.li" href="/secure/ViewProfile.jspa?name=dongfang.li">东方 李</a></span>
+                                </td><td class="reporter">            <span class="tinylink"><a class="user-hover" rel="xinhuan.yang" id="reporter_xinhuan.yang" href="/secure/ViewProfile.jspa?name=xinhuan.yang">信欢 杨</a></span>
+                                </td><td class="priority">            <img src="http://192.168.6.23:8080/images/icons/priorities/highest.svg" alt="Highest" title="Highest - This problem will block progress." width="16" height="16" border="0" align="absmiddle">
+                                </td><td class="status">
+                                    <span class=" jira-issue-status-lozenge aui-lozenge jira-issue-status-lozenge-yellow jira-issue-status-lozenge-indeterminate aui-lozenge-subtle jira-issue-status-lozenge-max-width-medium" data-tooltip="<span class=&quot;jira-issue-status-tooltip-title&quot;>Resolving</span>">Resolving</span>    </td><td class="resolution">    <em>未解决</em>
+                                </td><td class="created"> <span title="20/二月/19 5:11 下午"><time datetime="2019-02-20T17:11:35+0800">20/二月/19</time></span> </td><td class="updated"> <span title="21/二月/19 9:22 上午"><time datetime="2019-02-21T09:22:47+0800">21/二月/19</time></span> </td><td class="issue_actions">    <a class="issue-actions-trigger aui-button aui-button-compact aui-button-subtle trigger-happy" id="actions_11521" title="动作 (输入。访问问题操作)" href="/rest/api/1.0/issues/11521/ActionsAndOperations?atl_token=BQCF-IXNC-TSBY-PTCZ|ae781fa5ca6355fd373ed5a36d06e4c85845df69|lin" resolved="" aria-controls="actions_11521_drop" aria-haspopup="true" aria-expanded="false">
+                                    <span class="aui-icon aui-icon-small aui-iconfont-more">动作</span>
+                                </a>
+                                </td></tr><tr id="issuerow11522" rel="11522" data-issuekey="CYP-568" class="issuerow issue-table-draggable"><td class="issuetype"><a class="hidden-link issue-link" data-issue-key="CYP-568" href="/browse/CYP-568" tabindex="-1" title="CYP-568"></a>     <a class="issue-link" data-issue-key="CYP-568" href="/browse/CYP-568">
+                                    <img src="http://192.168.6.23:8080/secure/viewavatar?size=xsmall&amp;avatarId=10318&amp;avatarType=issuetype" alt="任务" title="任务 - 需要完成的任务。" width="16" height="16" border="0" align="absmiddle">
+                                </a>
+                                </td><td class="issuekey">
+
+                                    <a class="issue-link" data-issue-key="CYP-568" href="/browse/CYP-568">CYP-568</a>
+                                </td><td class="summary"><p>
+                                    <a class="issue-link" data-issue-key="CYP-568" href="/browse/CYP-568">CLONE - 报价时，只填写“预计还款日期”，利率修改为非必填项</a>
+                                </p>
+                                </td><td class="assignee">            <span class="tinylink"><a class="user-hover" rel="xinhuan.yang" id="assignee_xinhuan.yang" href="/secure/ViewProfile.jspa?name=xinhuan.yang">信欢 杨</a></span>
+                                </td><td class="reporter">            <span class="tinylink"><a class="user-hover" rel="xinhuan.yang" id="reporter_xinhuan.yang" href="/secure/ViewProfile.jspa?name=xinhuan.yang">信欢 杨</a></span>
+                                </td><td class="priority">            <img src="http://192.168.6.23:8080/images/icons/priorities/highest.svg" alt="Highest" title="Highest - This problem will block progress." width="16" height="16" border="0" align="absmiddle">
+                                </td><td class="status">
+                                    <span class=" jira-issue-status-lozenge aui-lozenge jira-issue-status-lozenge-yellow jira-issue-status-lozenge-indeterminate aui-lozenge-subtle jira-issue-status-lozenge-max-width-medium" data-tooltip="<span class=&quot;jira-issue-status-tooltip-title&quot;>已分配</span>">已分配</span>    </td><td class="resolution">    <em>未解决</em>
+                                </td><td class="created"> <span title="21/二月/19 9:21 上午"><time datetime="2019-02-21T09:21:54+0800">21/二月/19</time></span> </td><td class="updated"> <span title="21/二月/19 9:23 上午"><time datetime="2019-02-21T09:23:24+0800">21/二月/19</time></span> </td><td class="issue_actions">    <a class="issue-actions-trigger aui-button aui-button-compact aui-button-subtle trigger-happy" id="actions_11522" title="动作 (输入。访问问题操作)" href="/rest/api/1.0/issues/11522/ActionsAndOperations?atl_token=BQCF-IXNC-TSBY-PTCZ|ae781fa5ca6355fd373ed5a36d06e4c85845df69|lin" resolved="" aria-controls="actions_11522_drop" aria-haspopup="true" aria-expanded="false">
+                                    <span class="aui-icon aui-icon-small aui-iconfont-more">动作</span>
+                                </a>
+                                </td></tr><tr id="issuerow11006" rel="11006" data-issuekey="CYP-553" class="issuerow issue-table-draggable"><td class="issuetype"><a class="hidden-link issue-link" data-issue-key="CYP-553" href="/browse/CYP-553" tabindex="-1" title="CYP-553"></a>     <a class="issue-link" data-issue-key="CYP-553" href="/browse/CYP-553">
+                                    <img src="http://192.168.6.23:8080/secure/viewavatar?size=xsmall&amp;avatarId=10300&amp;avatarType=issuetype" alt="优化" title="优化 - " width="16" height="16" border="0" align="absmiddle">
+                                </a>
+                                </td><td class="issuekey">
+
+                                    <a class="issue-link" data-issue-key="CYP-553" href="/browse/CYP-553">CYP-553</a>
+                                </td><td class="summary"><p>
+                                    <a class="issue-link" data-issue-key="CYP-553" href="/browse/CYP-553">结算账户管理模块显示需优化</a>
+                                </p>
+                                </td><td class="assignee">            <span class="tinylink"><a class="user-hover" rel="xinhuan.yang" id="assignee_xinhuan.yang" href="/secure/ViewProfile.jspa?name=xinhuan.yang">信欢 杨</a></span>
+                                </td><td class="reporter">            <span class="tinylink"><a class="user-hover" rel="yunlan.zhou" id="reporter_yunlan.zhou" href="/secure/ViewProfile.jspa?name=yunlan.zhou">周运兰</a></span>
+                                </td><td class="priority">            <img src="http://192.168.6.23:8080/images/icons/priorities/highest.svg" alt="Highest" title="Highest - This problem will block progress." width="16" height="16" border="0" align="absmiddle">
+                                </td><td class="status">
+                                    <span class=" jira-issue-status-lozenge aui-lozenge jira-issue-status-lozenge-yellow jira-issue-status-lozenge-indeterminate aui-lozenge-subtle jira-issue-status-lozenge-max-width-medium" data-tooltip="<span class=&quot;jira-issue-status-tooltip-title&quot;>处理中</span><br><span class=&quot;jira-issue-status-tooltip-desc&quot;>此问题正在被经办人积极处理。</span>">处理中</span>    </td><td class="resolution">    <em>未解决</em>
+                                </td><td class="created"> <span title="31/十月/18 5:01 下午"><time datetime="2018-10-31T17:01:27+0800">31/十月/18</time></span> </td><td class="updated"> <span title="12/十一月/18 10:20 上午"><time datetime="2018-11-12T10:20:55+0800">12/十一月/18</time></span> </td><td class="issue_actions">    <a class="issue-actions-trigger aui-button aui-button-compact aui-button-subtle trigger-happy" id="actions_11006" title="动作 (输入。访问问题操作)" href="/rest/api/1.0/issues/11006/ActionsAndOperations?atl_token=BQCF-IXNC-TSBY-PTCZ|ae781fa5ca6355fd373ed5a36d06e4c85845df69|lin" resolved="" aria-controls="actions_11006_drop" aria-haspopup="true" aria-expanded="false">
+                                    <span class="aui-icon aui-icon-small aui-iconfont-more">动作</span>
+                                </a>
+                                </td></tr></tbody></table>
+                            </issuetable-web-component></div></div><div class="end-of-stable-message"></div><div class="aui-group aui-group-split count-pagination"><div class="aui-item"><span class="results-count-text"><span class="results-count-start">1</span>–<span class="results-count-end">3</span> 个问题，共 <span class="results-count-total results-count-link">3</span> 个</span><a href="#" class="refresh-table" title="刷新结果"><span class="aui-icon aui-icon-small aui-iconfont-refresh-small">刷新结果</span></a></div><div class="aui-item"><div class="pagination" data-displayable-total="3"></div></div></div></div></div></div>
+                        </div>
+                    </div>
+
+
+    </section>
+    <footer id="footer" role="contentinfo">
+
+
+        <section class="footer-body">
+            <ul class="atlassian-footer">
+                <li>
+                    Atlassian JIRA <a class="seo-link" rel="nofollow" href="https://www.atlassian.com/software/jira">Project Management Software</a>
+                    <span id="footer-build-information">(v7.6.3#76005-<span title='8a4e38d34af948780dbf52044e7aafb13a7cae58' data-commit-id='8a4e38d34af948780dbf52044e7aafb13a7cae58}'>sha1:8a4e38d</span>)</span>
+                </li>
+                <li>
+                    <a id="about-link" rel="nofollow" href="/secure/AboutPage.jspa/secure/AboutPage.jspa">About JIRA</a>
+                </li>
+                <li>
+                    <a id="footer-report-problem-link" rel="nofollow" href="/plugins/servlet/troubleshooting/view/">Report a problem</a>
+                </li>
+            </ul>
+            <ul class="atlassian-footer">
+                <li class="licensemessage">
+
+                </li>
+            </ul>
+
+            <div id="footer-logo"><a rel="nofollow" href="http://www.atlassian.com/">Atlassian</a></div>
+        </section>
+
+
+
+    </footer>
+</div>
+
+
+</body>
+</html>

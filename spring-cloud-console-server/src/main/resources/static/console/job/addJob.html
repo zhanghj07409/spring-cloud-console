@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../common/css/bootstrap.css">
+    <script type="text/javascript" src="../common/js/jquery-2.2.0.min.js"></script>
+
+    <script src="../common/js/bootstrap.min.js"></script>
+    <script src="../common/js/jquery.validate.min.js"></script>
+    <script src="../common/js/messages_zh.min.js"></script>
+    <link rel="stylesheet" href="../common/js/layui/css/layui.css"/>
+    <script src="../common/js/layui/layui.all.js"></script>
+    <style>
+        .ibox-content {
+            background-color: #ffffff;
+            color: inherit;
+            padding: 15px 20px 20px 20px;
+            border-color: #e7eaec;
+            -webkit-border-image: none;
+            -o-border-image: none;
+            border-image: none;
+            border-style: solid solid none;
+            border-width: 1px 0px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="ibox-content">
+    <form class="form-horizontal" id="addJobForm">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">任务名称：</label>
+
+            <div class="col-sm-8">
+                <input type="text" placeholder="任务名称" id="jobName" name="jobName" class="form-control">
+                <span class="help-block m-b-none">该名称不能与已有任务名称重复</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">cron表达式：</label>
+
+            <div class="col-sm-8">
+                <input type="text" placeholder="时间表达式" id="cronExpression" name="cronExpression"  class="form-control">
+                <span class="help-block m-b-none">格式:{秒数} {分钟} {小时} {日期} {月份} {星期} {年份(可为空)},<a href="http://cron.qqe2.com/" target="view_window">在线生成网站:http://cron.qqe2.com/</a></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">任务类型：</label>
+            <div class="col-sm-8">
+                <select name="type" id="type"  class="form-control">
+                    <option value="get">网址检测</option>
+                    <option value="ping"  selected = "selected">ping</option>
+                    <option value="socket">端口检测</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group getForm">
+            <label class="col-sm-3 control-label">url：</label>
+            <div class="col-sm-8">
+                <input type="text" placeholder="url" id="url" name="url" class="form-control">
+                <span class="help-block m-b-none">例: https://www.baidu.com</span>
+            </div>
+        </div>
+        <div class="form-group pingForm">
+            <label class="col-sm-3 control-label">host：</label>
+            <div class="col-sm-8">
+                <input type="text" placeholder="host" id="host" name="host" class="form-control">
+                <span class="help-block m-b-none">例: 127.0.0.1 或 www.baidu.com</span>
+            </div>
+        </div>
+        <div class="form-group socketForm">
+            <label class="col-sm-3 control-label">host：</label>
+            <div class="col-sm-8">
+                <input type="text" placeholder="ip" id="ip" name="ip" class="form-control">
+                <span class="help-block m-b-none">例: 127.0.0.1 或 www.baidu.com</span>
+            </div>
+        </div>
+        <div class="form-group socketForm">
+            <label class="col-sm-3 control-label">端口号：</label>
+            <div class="col-sm-8">
+                <input type="text" placeholder="端口号" id="port" name="port" class="form-control">
+                <span class="help-block m-b-none">例: 80</span>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    var url="/job/addjob";
+    jQuery.validator.addMethod("cornValidate", function(value, element) {
+        var tel = /(((^([0-9]|[0-5][0-9])(\,|\-|\/){1}([0-9]|[0-5][0-9]) )|^([0-9]|[0-5][0-9]) |^(\* ))((([0-9]|[0-5][0-9])(\,|\-|\/){1}([0-9]|[0-5][0-9]) )|([0-9]|[0-5][0-9]) |(\* ))((([0-9]|[01][0-9]|2[0-3])(\,|\-|\/){1}([0-9]|[01][0-9]|2[0-3]) )|([0-9]|[01][0-9]|2[0-3]) |(\* ))((([0-9]|[0-2][0-9]|3[01])(\,|\-|\/){1}([0-9]|[0-2][0-9]|3[01]) )|(([0-9]|[0-2][0-9]|3[01]) )|(\? )|(\* )|(([1-9]|[0-2][0-9]|3[01])L )|([1-7]W )|(LW )|([1-7]\#[1-4] ))((([1-9]|0[1-9]|1[0-2])(\,|\-|\/){1}([1-9]|0[1-9]|1[0-2]) )|([1-9]|0[1-9]|1[0-2]) |(\* ))(([1-7](\,|\-|\/){1}[1-7])|([1-7])|(\?)|(\*)|(([1-7]L)|([1-7]\#[1-4]))))|(((^([0-9]|[0-5][0-9])(\,|\-|\/){1}([0-9]|[0-5][0-9]) )|^([0-9]|[0-5][0-9]) |^(\* ))((([0-9]|[0-5][0-9])(\,|\-|\/){1}([0-9]|[0-5][0-9]) )|([0-9]|[0-5][0-9]) |(\* ))((([0-9]|[01][0-9]|2[0-3])(\,|\-|\/){1}([0-9]|[01][0-9]|2[0-3]) )|([0-9]|[01][0-9]|2[0-3]) |(\* ))((([0-9]|[0-2][0-9]|3[01])(\,|\-|\/){1}([0-9]|[0-2][0-9]|3[01]) )|(([0-9]|[0-2][0-9]|3[01]) )|(\? )|(\* )|(([1-9]|[0-2][0-9]|3[01])L )|([1-7]W )|(LW )|([1-7]\#[1-4] ))((([1-9]|0[1-9]|1[0-2])(\,|\-|\/){1}([1-9]|0[1-9]|1[0-2]) )|([1-9]|0[1-9]|1[0-2]) |(\* ))(([1-7](\,|\-|\/){1}[1-7] )|([1-7] )|(\? )|(\* )|(([1-7]L )|([1-7]\#[1-4]) ))((19[789][0-9]|20[0-9][0-9])\-(19[789][0-9]|20[0-9][0-9])))/;
+        return this.optional(element) || (tel.test(value));
+    }, "请正确填写正确的corn 表达式");
+    jQuery.validator.addMethod("httpValidate", function(value, element) {
+        var tel = /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/;
+        return this.optional(element) || (tel.test(value));
+    }, "请正确填写正确的网址");
+    $(function(){
+        var type =getUrlParam("type");
+        if(type!=null){
+            editInit();
+        }
+        $('#type').on('change',function(){
+            typeChangeFun($(this).val());
+        });
+        typeChangeFun($('#type').val());
+        $("#addJobForm").validate({
+            rules: {
+                jobName: "required",
+                cronExpression: {
+                    required:true,
+                    cornValidate:true
+                },
+                type: "required",
+                url: {
+                    required:true,
+                    httpValidate:true
+                },
+                host:  {
+                    required:true
+                },
+                ip: {
+                    required:true
+                },
+                port:   {
+                    required:true,
+                    digits:true,
+                    max:65535,
+                    min:0
+                },
+            }
+        });
+    })
+    function typeChangeFun(type) {
+        if(type=="ping"){
+            $(".pingForm").show();
+            $(".socketForm").hide();
+            $(".getForm").hide();
+        }
+        if(type=="get"){
+            $(".getForm").show();
+            $(".pingForm").hide();
+            $(".socketForm").hide();
+        }
+        if(type=="socket"){
+            $(".socketForm").show();
+            $(".pingForm").hide();
+            $(".getForm").hide();
+        }
+    }
+    function commintToService(index) {
+        if(!$("#addJobForm").valid()){
+            return false;
+        }else{
+            var param="";
+            var type=$('#type option:selected').val();
+            var jobName=$('#jobName') .val();
+            var cronExpression=$('#cronExpression') .val();
+            if(type=="get"){
+                param="{url:\""+$('#url').val()+"\"}";
+            }
+            if(type=="ping"){
+                param="{host:\""+$('#host').val()+"\"}";
+            }
+            if(type=="socket"){
+                param="{ip:\""+$('#ip').val()+"\", port:\""+$('#port').val()+"\"}";
+            }
+            param=param.toString();
+            $.ajax({
+                url:url,
+                type: 'post',
+                dataType: 'json',
+                data: {param: param,type:type,jobName:jobName,cronExpression:cronExpression},
+                success: function (data) {
+                    if(data.success){
+                        parent.refreshTable();
+                        parent.layer.msg('操作成功!');
+                        parent.layer.close(index);
+                    }else{
+                        layer.msg("操作失败:"+data.msg);
+                        parent.refreshTable();
+                    }
+                },
+                error:function (data) {
+                    layer.msg("操作失败:"+data.msg);
+                    parent.refreshTable();
+                }
+            });
+        }
+    }
+    var getUrlParam=function(name){
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var url=decodeURIComponent(window.location.search);
+        var r = url.substr(1).match(reg);
+        if (r != null){
+            return unescape(r[2]);
+        } return null;
+    }
+    var editInit=function(){
+        url="/job/reschedulejob";
+        var type=getUrlParam("type").toLowerCase();
+        var jobName=getUrlParam("jobName");
+        var param=getUrlParam("param");
+        var cronExpression=getUrlParam("cronExpression");
+        $("#jobName").val(jobName);
+        $('#jobName').attr("readonly","readonly");//设为只读
+        $("#type").val(type);
+        $('#type').attr("disabled","disabled");//设为只读
+        $("#cronExpression").val(cronExpression);
+        param=eval('(' + param + ')');
+        if(type=="get"){
+            $('#url').val(param.url);
+        }
+        if(type=="ping"){
+            $('#host').val(param.host);
+        }
+        if(type=="socket"){
+            $('#ip').val(param.ip);
+            $('#port').val(param.port);
+        }
+    }
+</script>
+</body>
+</html>

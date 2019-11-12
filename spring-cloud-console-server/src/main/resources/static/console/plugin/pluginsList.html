@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+
+    <meta charset="utf-8">
+    <title>插件导航器 - SCCS</title>
+
+
+    <link type="text/css" rel="stylesheet" href="../common/css/batch.css" data-wrm-key="_super" data-wrm-batch-type="context" media="all">
+    <script type="text/javascript" src="../common/js/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript" src="../common/js/adapter.js"></script>
+    <link rel="stylesheet" href="../common/css/zTreeStyle/zTreeStyle.css" type="text/css">
+    <script type="text/javascript" src="../common/js/jquery.ztree.core.min.js"></script>
+    <link rel="stylesheet" href="../common/css/bootstrap.css">
+    <link rel="stylesheet" href="../common/js/layui/css/layui.css"/>
+    <script src="../common/js/layui/layui.all.js"></script>
+    <link rel="stylesheet" href="../common/css/bootstrap-switch.min.css"/>
+    <script src="../common/js/bootstrap-switch.min.js"></script>
+    <style>
+        pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
+        .string { color: #5cb85c; }
+        .number { color: darkorange; }
+        .boolean { color: blue; }
+        .null { color: magenta; }
+        .key { color: #337ab7; }
+        .statusFail { color: #d43f3a; }
+        .my-form-group{
+            padding-top: 5px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+    </style>
+</head>
+
+
+<script>
+    $.ajax({
+        url: '/pluginsClient/list',
+        type: 'get',
+        dataType: 'json',
+        cache: false,
+        data: {},
+        success: function (data) {
+            var rows = data.rows;
+            var appendStr = "";
+
+            for (var i = 0; i < rows.length; i++) {
+                appendStr = appendStr + '<div class="aui-nav-heading">' + rows[i].menuname + '</div><ul class="aui-nav" resolved="">';
+                var pluginSubMenus = rows[i].pluginSubMenus;
+                if(pluginSubMenus==null){
+                    appendStr = appendStr + '<li><a onclick="openWorkSpaceRWindow(this)" url="' + rows[i].menuaddress + '" id="'+rows[i].plugin+'" title="'+rows[i].menuname+'">' + rows[i].menuname + '</a></li>';
+                }else {
+                    for(var j = 0; j < pluginSubMenus.length; j++){
+                        appendStr = appendStr + '<li><a onclick="openWorkSpaceRWindow(this)"  url="' + pluginSubMenus[j].submenuaddress + '" id="'+pluginSubMenus[j].id+'" title="'+pluginSubMenus[j].submenuname+'">' + pluginSubMenus[j].submenuname + '</a></li>';
+                    }
+                }
+                appendStr = appendStr + '</ul>';
+
+            }
+            $('#list-plugins').html(appendStr);
+        },
+        error: function (data) {
+            $("#message").text(data);
+        }
+    });
+
+
+    var openWorkSpaceRWindow = function (entity) {
+
+        document.getElementById("query_Form").style.display="none";//隐藏
+        $('#list-plugins-children-info').html("");
+
+        var url=$(entity).attr("url");
+        var id=$(entity).attr("id");
+
+        if(id=="ZooKeeper"){
+            var appendStr = "";
+            appendStr = appendStr + '<div class="zTreeDemoBackground left">';
+            appendStr = appendStr + '<ul id="treeDemo" class="ztree"></ul>';
+            appendStr = appendStr + '</div>';
+            $('#list-plugins-children').html(appendStr);
+            openZTreeWindow();
+        }else{
+            $.ajax({
+                url: url,
+                type: 'get',
+                dataType: 'json',
+                cache: false,
+                data: {},
+                success: function (data) {
+                    var rows = data.rows;
+                    var appendStr = "";
+
+
+                    for (var i = 0; i < rows.length; i++) {
+                        appendStr = appendStr + '<ul class="aui-nav" id="project_issuetypes" resolved="">';
+                        if(rows[i].parentmenuaddress!=null){
+                            appendStr = appendStr + '<li id="project-issuetypes-summary"><a onclick="openListInfoWindow(this)" url="' + rows[i].parentmenuaddress + '" class="project-issuetype" title="'+rows[i].parentId+'">'+rows[i].parentId+'</a></li>';
+                        }else {
+                            appendStr = appendStr + '<li id="project-issuetypes-summary">'+rows[i].parentId+'</li>';
+                        }
+
+                        if(rows[i].childrenRows!=null&&rows[i].childrenRows!=undefined){
+                            appendStr = appendStr + '<li id="project-issuetypes-container">';
+                            appendStr = appendStr + '<ul class="project-issuetypes">';
+                            var childrenRows = rows[i].childrenRows;
+                            for (var j = 0; j < childrenRows.length; j++) {
+                                var liclass = "project-issuetypes-teaser";
+                                if(j==childrenRows.length-1){
+                                    liclass ="project-issuetypes-teaser project-issuetypes-teaser-last project-issuetypes-last";
+                                }
+                                appendStr = appendStr + '<li class="'+liclass+'"><a onclick="openListInfoWindow(this)" url="' + childrenRows[j].childrenmenuaddress + '" class="project-issuetype" title="'+childrenRows[j].childrenId+'">'+childrenRows[j].childrenId+'</a></li>';
+                            }
+                            appendStr = appendStr + '</ul>';
+                            appendStr = appendStr + '</li>';
+                        }
+
+                        appendStr = appendStr + '</ul>';
+                    }
+
+
+                    console.log(appendStr);
+                    $('#list-plugins-children').html(appendStr);
+                },
+                error: function (data) {
+                    $("#message").text(data);
+                }
+            });
+        }
+
+    }
+
+
+    var openListInfoWindowParam = function (url,queryParam) {
+        $('#list-plugins-children-info').html("");
+        $.ajax({
+            url: url,
+            type: 'get',
+            dataType: 'json',
+            cache: false,
+            data: {"queryParam":queryParam},
+            success: function (data) {
+                var rows = data.rows;
+                var appendStr = "";
+                var recordKeys = rows.recordKeys;
+                var recordId	= recordKeys.recordId;
+                var recordAttribute1	= recordKeys.recordAttribute1;
+                var recordAttribute2	= recordKeys.recordAttribute2;
+                var recordAttribute3	= recordKeys.recordAttribute3;
+                var recordAttribute4	= recordKeys.recordAttribute4;
+                appendStr = appendStr + '<thead>';
+                appendStr = appendStr + '<tr>';
+                appendStr = appendStr + '<th>'+recordId+'</th>';
+
+                if(recordAttribute1!=null){
+                    appendStr = appendStr + '<th>'+recordAttribute1+'</th>';
+                }
+                if(recordAttribute2!=null){
+                    appendStr = appendStr + '<th>'+recordAttribute2+'</th>';
+                }
+                if(recordAttribute3!=null){
+                    appendStr = appendStr + '<th>'+recordAttribute3+'</th>';
+                }
+                if(recordAttribute4!=null){
+                    appendStr = appendStr + '<th>'+recordAttribute4+'</th>';
+                }
+                appendStr = appendStr + '</tr>';
+                appendStr = appendStr + '</thead>';
+
+                appendStr = appendStr + '<tbody>';
+
+                var recordRows = rows.recordRows;
+                for (var i = 0; i < recordRows.length; i++) {
+
+                    appendStr = appendStr + '<tr class="priority-row">';
+
+                    if(url.indexOf("/mySqlClient") != -1){
+                        document.getElementById("query_Form").style.display="";//显示
+                        appendStr = appendStr + '<td><a onclick="openDetailInfoWindow(\''+recordRows[i][recordId]+'\',\''+recordRows[i][recordAttribute1]+'\')"  class="project-issuetype" title="'+recordRows[i][recordId]+'"><b class="priority-name">'+recordRows[i][recordId]+'</b></a></td>';
+                    }else {
+                        appendStr = appendStr + '<td><b class="priority-name">'+recordRows[i][recordId]+'</b></td>';
+                    }
+
+                    if(recordAttribute1!=null){
+                        appendStr = appendStr + '<td>'+recordRows[i][recordAttribute1]+'</td>';
+                    }
+                    if(recordAttribute2!=null){
+                        appendStr = appendStr + '<td>'+recordRows[i][recordAttribute2]+'</td>';
+                    }
+                    if(recordAttribute3!=null){
+                        appendStr = appendStr + '<td>'+recordRows[i][recordAttribute3]+'</td>';
+                    }
+                    if(recordAttribute4!=null){
+                        appendStr = appendStr + '<td>'+recordRows[i][recordAttribute4]+'</td>';
+                    }
+
+                    appendStr = appendStr + '</tr>';
+                }
+                appendStr = appendStr + '</tbody>';
+
+                console.log(appendStr);
+                $('#list-plugins-children-info').html(appendStr);
+            },
+            error: function (data) {
+                $("#message").text(data);
+            }
+        });
+    }
+
+    var openListInfoWindow = function (entity) {
+        var url=$(entity).attr("url");
+        openListInfoWindowParam(url);
+
+    }
+
+    function openDetailInfoWindow(key,value){
+        layer.open({
+            type: 1,
+            area: ['600px', '280px'],
+            title:"修改配置",
+            shadeClose: true, //点击遮罩关闭
+            content: '<div class="form-group my-form-group">\n' +
+            '    <label for="exampleInputEmail1">variable_name</label>\n' +
+            '    <input type="text" readonly="true" class="form-control" id="propertyKey" name="propertyKey" placeholder="property" value="'+key+'">\n' +
+            '  </div>\n' +
+            '  <div class="form-group my-form-group">\n' +
+            '    <label for="exampleInputPassword1">value</label>\n' +
+            '    <input type="text" class="form-control" id="propertyValue" name="propertyValue" placeholder="value" value="'+value+'">\n' +
+            '  </div>',
+            btn: ['修改', '取消']
+            ,btn1: function(index, layero){
+                var key=$("#propertyKey").val();
+                var value=$("#propertyValue").val();
+                console.log(key);
+                console.log(value);
+                if(key==null||key==""){
+                    layer.msg('配置名不能为空');
+                }
+                return changeProperties(key,value,index);
+            },btn2: function(index, layero){
+                layer.close(index);
+                return false;
+            }
+        });
+    }
+
+    function changeProperties(key,value,index){
+        Ajax.req({
+            url: "/mySqlClient/updateGlobalVariable",
+            type: 'json',
+            params: {"key":key,"value":value},
+            ok: function (data) {
+                layer.msg(data.msg);
+                layer.close(index);
+            },
+            err: function (data) {
+                layer.msg("操作失败:"+data.msg);
+            }
+        });
+    }
+
+    var setting = {
+        async: {
+            enable: true,
+            url:"/zkClient/listNodes",
+            autoParam:["path"],
+            otherParam:{},
+            dataFilter: filter
+        },
+        callback: {
+            onClick: zTreeOnClick
+        }
+    };
+
+    function zTreeOnClick(event, treeId, treeNode) {
+        if(treeNode.isParent==false){
+            $.ajax({
+                url: treeNode.pathurl,
+                type: 'get',
+                cache: false,
+                data: {},
+                success: function (data) {
+                    var appendStr = "";
+
+                    appendStr = appendStr + data;
+
+                    console.log(appendStr);
+                    $('#list-plugins-children-info').html(appendStr);
+                },
+                error: function (data) {
+                    $("#message").text(data);
+                }
+            });
+        }
+    };
+
+    function filter(treeId, parentNode, childNodes) {
+        if (!childNodes) return null;
+        for (var i=0, l=childNodes.length; i<l; i++) {
+            childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+        }
+        return childNodes;
+    }
+
+    var openZTreeWindow = function () {
+        $.fn.zTree.init($("#treeDemo"), setting);
+    }
+
+
+    $(function() {
+        $("#query_btn").click(function queryformSubmit() {
+            var queryParam = $("#queryParam").val();
+            var url = $("#url").val();
+            openListInfoWindowParam(url,queryParam);
+        });
+    });
+
+</script>
+
+<body id="jira" class="aui-layout aui-theme-default page-type-admin  aui-page-sidebar" data-version="7.6.3" data-aui-version="6.1.0">
+<div id="page">
+    <header id="header" role="banner">
+        <nav class="aui-header aui-dropdown2-trigger-group" role="navigation" resolved="" data-aui-responsive="true">
+            <div class="aui-header-inner">
+                <div class="aui-header-primary"><h1 id="logo" class="aui-header-logo aui-header-logo-custom"><a
+                        href=""><img
+                        src="" alt="SccS"
+                        data-aui-responsive-header-index="0"></a></h1>
+                    <ul class="aui-nav" style="width: auto;" resolved="">
+
+                        <li><a href="/console/service/serviceList.html" class=" aui-nav-link"
+                               id="browse_link" aria-haspopup="true" aria-controls="browse_link-content"
+                               title="应用列表" resolved="" aria-expanded="false">应用</a>
+
+                        </li>
+                        <li><a href="/console/plugin/pluginsList.html" class=" aui-nav-link"
+                               id="find_link" aria-haspopup="true" aria-controls="find_link-content"
+                               title="插件服务列表" resolved="" aria-expanded="false">插件</a>
+                        </li>
+                        <li><a href="/console/job/jobList.html" class=" aui-nav-link"
+                               id="find_link" aria-haspopup="true" aria-controls="find_link-content"
+                               title="服务监控" resolved="" aria-expanded="false">监控</a>
+                        </li>
+                        <li><a href="/zipkin" class=" aui-nav-link"
+                               id="find_link" aria-haspopup="true" aria-controls="find_link-content"
+                               title="微服务链路跟踪" resolved="" aria-expanded="false">Zipkin</a>
+                        </li>
+                        <li><a href="#"
+                               class=" aui-nav-link" id="greenhopper_menu"
+                               aria-haspopup="true" aria-controls="greenhopper_menu-content"
+                               title="项目脚本打包" resolved="" aria-expanded="false">脚本打包</a>
+                        </li>
+                        <li><a href="#"
+                               class=" aui-nav-link" id="greenhopper_menu"
+                               aria-haspopup="true" aria-controls="greenhopper_menu-content"
+                               title="项目编译程序部署" resolved="" aria-expanded="false">项目部署</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="aui-header-secondary">
+                    <ul class="aui-nav" resolved="">
+                        <li id="system-help-menu">
+                            <a class="aui-nav-link" id="help_menu" aria-haspopup="true"
+                               href="#" resolved=""
+                               aria-controls="system-help-menu-content" aria-expanded="false">登录用户：admin &nbsp;&nbsp;&nbsp;</a>
+                        </li>
+                        <li id="system-logout-menu">
+                            <a class="aui-nav-link" id="logout_menu" aria-haspopup="true"
+                               href="/login/logout" title="退出" resolved=""
+                               aria-controls="system-help-menu-content" aria-expanded="false">退出</a>
+                        </li>
+                    </ul>
+                </div>
+            </div><!-- .aui-header-inner--></nav><!-- .aui-header -->
+    </header>
+
+
+
+
+    <section id="content" role="main">
+
+        <!-- sidebarContentHtml -->
+        <div class="aui-sidebar projects-sidebar fade-in" resolved="">
+            <div class="aui-sidebar-wrapper" style="height: 905px;">
+                <div class="aui-sidebar-body">
+                    <header class="aui-page-header">
+                    <div class="aui-page-header-inner">
+
+                        <div class="aui-page-header-main">
+                            <h1>
+                            <div class="aui-group aui-group-split">
+                                <div class="aui-item project-title">插件服务
+                                </div>
+                            </div>
+                            </h1>
+                        </div><!-- .aui-page-header-main -->
+                    </div><!-- .aui-page-header-inner -->
+                    </header><!-- .aui-page-header -->
+
+                        <nav class="aui-navgroup aui-navgroup-vertical">
+                            <div class="aui-navgroup-inner">
+                                <div class="aui-navgroup-primary">
+                                    <div id="list-plugins" class="admin-menu-links">
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </nav><!-- .aui-page-panel-nav -->
+
+                </div>
+
+            </div>
+        </div>
+        <!-- /sidebarContentHtml -->
+
+
+        <header class="aui-page-header">
+            <div class="aui-page-header-inner">
+            <header class="aui-page-header" id="project-config-header">
+                <div class="aui-page-header-inner">
+                    <div class="aui-page-header-main"><h1 id="project-config-header-name">配置信息</h1>
+                    </div>
+                     <!-- .aui-page-header-main -->
+                </div><!-- .aui-page-header-inner -->
+            </header><!-- .aui-page-header -->
+            </div><!-- .aui-page-header-inner -->
+        </header><!-- .aui-page-header -->
+
+
+
+        <div class="aui-page-panel">
+            <div class="aui-page-panel-inner">
+
+
+
+
+                <div class="aui-page-panel-nav">
+                    <nav class="aui-navgroup aui-navgroup-vertical">
+                        <div class="aui-navgroup-inner">
+                            <div class="aui-navgroup-primary">
+                                <div id="list-plugins-children" class="admin-menu-links">
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div><!-- .aui-page-panel-nav -->
+
+
+            <section class="aui-page-panel-content">
+
+                <div id="project-config-panel-priorities" class="project-config-panel">
+                    <div class="aui-page-header project-config-panel-header">
+                        <div class="aui-page-header-inner">
+                            <div class="aui-page-header-main"><h2 class="project-config-heading">属性</h2>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div id="query_Form" style="display: none">
+                        <form class="navigator-search query-component generic-styled" onSubmit="return false;" >
+                            <div class="aui-group">
+                                <div class="aui-item search-wrap">
+                                    <div class="search-container" data-mode="basic">
+                                        <div class="search-field-container">
+                                            <div class="search-criteria-container">
+                                                <div class="search-criteria">
+                                                    <ul class="criteria-list">
+                                                        <li class="text-query"><div class="text-query-container">参数名称：<input class="search-entry text ajs-dirty-warning-exempt" id="queryParam" name="queryParam" type="text"><input id="url" name="url" value="/mySqlClient/listGlobalVariables" type="hidden">&nbsp;&nbsp;<button id="query_btn" class="btn btn-primary btn-pill btn-small">查询</button></div></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <table id="list-plugins-children-info" class="aui aui-table-rowhover priorities-table">
+
+                    </table>
+                </div>
+
+            </section><!-- .aui-page-panel-content -->
+        </div><!-- .aui-page-panel-inner -->
+        </div><!-- .aui-page-panel -->
+
+    </section>
+
+
+    <footer id="footer" role="contentinfo">
+        <section class="footer-body">
+            <ul class="atlassian-footer">
+                <li>
+                    SCCS <a class="seo-link" rel="nofollow" href="#">Spring Cloud Console Server</a>
+                </li>
+                <li>
+                    <a id="about-link" rel="nofollow" href="#">关于我们</a>
+                </li>
+                <li>
+                    <a id="footer-report-problem-link" rel="nofollow"
+                       href="#">问题反馈</a>
+                </li>
+            </ul>
+            <ul class="atlassian-footer">
+                <li class="licensemessage">
+
+                </li>
+            </ul>
+        </section>
+    </footer>
+
+</div>
+
+
+<div id="comment-add-dialog" class="jira-dialog box-shadow jira-dialog-open popup-width-large jira-dialog-content-ready" style="display: none; width: 810px; margin-left: -406px; margin-top: -142px;">
+    <div class="jira-dialog-heading">
+        <h2 title="详情">详情</h2></div><div class="jira-dialog-content">
+    <form action="" class="aui dnd-attachment-support" id="comment-add" method="post">
+        <div class="form-body" style="max-height: 130px;">
+            <div class="hidden">
+                <input name="id" value="11818" type="hidden">
+            </div>
+            <div>
+                变量：<input name="id" value="11818" type="text">
+            </div>
+            <fieldset>
+
+            </fieldset>
+
+        </div>
+        <div class="buttons-container form-footer">
+            <div class="buttons"><span class="icon throbber"></span>
+
+                <input accesskey="S" class="aui-button" id="comment-add-submit" name="Add" title="按 Alt+Shift+S 提交这个表单" value="添加" type="submit">
+                <a accesskey="`" class="aui-button aui-button-link cancel"  id="comment-add-cancel" title="按 Alt+Shift+` 取消">取消</a>
+            </div>
+        </div>
+    </form> <!-- // .aui.dnd-attachment-support #comment-add -->
+</div>
+</div>
+
+</body>
+</html>

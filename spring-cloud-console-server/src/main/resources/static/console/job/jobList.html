@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>任务列表</title>
+    <link type="text/css" rel="stylesheet" href="../common/css/batch.css" data-wrm-key="_super" data-wrm-batch-type="context" media="all">
+    <link rel="stylesheet" href="../common/css/bootstrap-table.css">
+    <link rel="stylesheet" href="../common/css/bootstrap.css">
+    <script type="text/javascript" src="../common/js/jquery-2.2.0.min.js"></script>
+
+    <script src="../common/js/bootstrap.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="../common/js/bootstrap-table.js"></script>
+    <!-- Latest compiled and minified Locales -->
+    <script src="../common/js/bootstrap-table-zh-CN.js"></script>
+    <link rel="stylesheet" href="../common/js/layui/css/layui.css"/>
+    <script src="../common/js/layui/layui.all.js"></script>
+    <style>
+        .myBtndiv{
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="page">
+<header id="header" role="banner">
+    <nav class="aui-header aui-dropdown2-trigger-group" role="navigation" resolved="" data-aui-responsive="true">
+        <div class="aui-header-inner">
+            <div class="aui-header-primary"><h1 id="logo" class="aui-header-logo aui-header-logo-custom"><a
+                    href=""><img
+                    src="" alt="SccS"
+                    data-aui-responsive-header-index="0"></a></h1>
+                <ul class="aui-nav" style="width: auto;" resolved="">
+
+                    <li><a href="/console/service/serviceList.html" class=" aui-nav-link"
+                           id="browse_link" aria-haspopup="true" aria-controls="browse_link-content"
+                           title="应用列表" resolved="" aria-expanded="false">应用</a>
+
+                    </li>
+                    <li><a href="/console/plugin/pluginsList.html" class=" aui-nav-link"
+                           id="find_link" aria-haspopup="true" aria-controls="find_link-content"
+                           title="插件服务列表" resolved="" aria-expanded="false">插件</a>
+                    </li>
+                    <li><a href="/console/job/jobList.html" class=" aui-nav-link"
+                           id="find_link" aria-haspopup="true" aria-controls="find_link-content"
+                           title="服务监控" resolved="" aria-expanded="false">监控</a>
+                    </li>
+                    <li><a href="/zipkin" class=" aui-nav-link"
+                           id="find_link" aria-haspopup="true" aria-controls="find_link-content"
+                           title="微服务链路跟踪" resolved="" aria-expanded="false">Zipkin</a>
+                    </li>
+                    <li><a href="#"
+                           class=" aui-nav-link" id="greenhopper_menu"
+                           aria-haspopup="true" aria-controls="greenhopper_menu-content"
+                           title="项目脚本打包" resolved="" aria-expanded="false">脚本打包</a>
+                    </li>
+                    <li><a href="#"
+                           class=" aui-nav-link" id="greenhopper_menu"
+                           aria-haspopup="true" aria-controls="greenhopper_menu-content"
+                           title="项目编译程序部署" resolved="" aria-expanded="false">项目部署</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="aui-header-secondary">
+                <ul class="aui-nav" resolved="">
+                    <li id="system-help-menu">
+                        <a class="aui-nav-link" id="help_menu" aria-haspopup="true"
+                           href="#" resolved=""
+                           aria-controls="system-help-menu-content" aria-expanded="false">登录用户：admin &nbsp;&nbsp;&nbsp;</a>
+                    </li>
+                    <li id="system-logout-menu">
+                        <a class="aui-nav-link" id="logout_menu" aria-haspopup="true"
+                           href="/login/logout" title="退出" resolved=""
+                           aria-controls="system-help-menu-content" aria-expanded="false">退出</a>
+                    </li>
+                </ul>
+            </div>
+        </div><!-- .aui-header-inner--></nav><!-- .aui-header -->
+</header>
+<div id="toolbar" class="myBtndiv">
+    <button id="btn_add" type="button" class="btn btn-primary" onclick="addJob()">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+    </button>
+    <button id="btn_edit" type="button" class="btn btn-success" onclick="editJob()">
+        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+    </button>
+    <button id="btn_pause" type="button" class="btn btn-info" onclick="startJob()">
+        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>开始
+    </button>
+    <button id="btn_resume" type="button" class="btn btn-warning" onclick="stopJob()">
+        <span class="glyphicon glyphicon-pause" aria-hidden="true"></span>暂停
+    </button>
+    <button id="btn_delete" type="button" class="btn btn-danger" onclick="deleteJob()">
+        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+    </button>
+</div>
+<table id="jobTable"></table>
+
+    <footer id="footer" role="contentinfo">
+        <section class="footer-body">
+            <ul class="atlassian-footer">
+                <li>
+                    SCCS <a class="seo-link" rel="nofollow" href="#">Spring Cloud Console Server</a>
+                </li>
+                <li>
+                    <a id="about-link" rel="nofollow" href="#">关于我们</a>
+                </li>
+                <li>
+                    <a id="footer-report-problem-link" rel="nofollow"
+                       href="#">问题反馈</a>
+                </li>
+            </ul>
+            <ul class="atlassian-footer">
+                <li class="licensemessage">
+
+                </li>
+            </ul>
+        </section>
+    </footer>
+</div>
+
+<script>
+    $(function () {
+        $('#jobTable').bootstrapTable({
+            url: '/job/getAllJob',         //请求后台的URL（*）
+            method: 'get',                      //请求方式（*）
+            toolbar: '#toolbar',                //工具按钮用哪个容器
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pagination: true,                   //是否显示分页（*）
+            sortable: true,                     //是否启用排序
+            sortOrder: "asc",                   //排序方式
+            sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber: 1,                       //初始化加载第一页，默认第一页
+            pageSize: 10,                       //每页的记录行数（*）
+            pageList: [10, 20, 50, 100],        //可供选择的每页的行数（*）
+            search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端
+            height: $(window).height(),                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            showRefresh: true,                  //是否显示刷新按钮
+            uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+            clickToSelect: true,                //是否启用点击选中行*/
+            columns: [{
+                checkbox: true
+                },
+                {
+                    field: 'jobName',
+                    title: '任务名称'
+                },{
+                    field: 'cronExpression',
+                    title: '时间表达式',
+                },{
+                    field: 'type',
+                    title: '类别',
+                    formatter: typeFormatter //自定义方法，添加操作按钮
+                },{
+                    field: 'param',
+                    title: '参数',
+                },{
+                    field: 'jobStatus',
+                    title: '任务状态',
+                    formatter: jobStatusFormatter //自定义方法，添加操作按钮
+                },{
+                    field: 'result',
+                    title: '执行结果',
+                    formatter: resultFormatter //自定义方法，添加操作按钮
+                },
+                {
+                    field: 'lastRunTime',
+                    title: '更新时间',
+                },
+                {
+                    field: 'detail',
+                    title: '详情',
+                    formatter: detailFormatter //自定义方法，添加操作按钮
+                },
+            ],
+        });
+        $(window).resize(function() {
+            $('#jobTable').bootstrapTable('resetView', {
+                height: $(window).height()
+            });
+        });
+    });
+    function typeFormatter(value, row, index) {//执行结果显示
+        if(row.type.toUpperCase()=="SOCKET"){
+            return "端口检测";
+        }
+        if(row.type.toUpperCase()=="GET"){
+            return "网址检测";
+        }
+        return row.type;
+    }
+    function resultFormatter(value, row, index) {//执行结果显示
+        var btnList=[];
+        if(row.result==true||row.result=="200"){
+            btnList.push('<span class="label label-success">success</span>');
+        }else if(row.result==false){
+            btnList.push('<span class="label label-danger">fail</span>');
+        }else{
+            btnList.push('<span class="label label-warning">'+row.result+'</span>');
+        }
+        return btnList.join('');
+    }
+    function jobStatusFormatter(value, row, index) {//任务状态显示
+        var btnList=[];
+        if(row.jobStatus=="start"){
+            btnList.push('<span class="label label-success">start</span>');
+        }else{
+            btnList.push('<span class="label label-warning">stop</span>');
+        }
+        return btnList.join('');
+    }
+    function detailFormatter(value, row, index) {//详情
+
+        return "<button type=\"button\" jobName='"+row.jobName+"' jobType='"+row.type+"' class=\"btn btn-primary\"onclick=\"jobResultDetail(this)\">查看</button>";
+    }
+    function editJob(){
+        var rows= $('#jobTable').bootstrapTable('getSelections');
+        if(rows.length!=1){
+            layer.msg("请选择一行数据!");
+            return;
+        }
+        var data=rows[0];
+        var url="jobName="+data.jobName+"&type="+data.type+"&param="+data.param+"&cronExpression="+data.cronExpression;
+        url="./addJob.html?"+encodeURIComponent(url);
+        layer.open({
+            type: 2,
+            title: '修改任务',
+            shadeClose: true,
+            shade: false,
+            maxmin: true, //开启最大化最小化按钮
+            area: ['900px', '560px'],
+            content: url,
+            btn: ['提交', '取消'],
+            btn1: function(index, layero){
+                var body = layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']];//得到iframe页的窗口对象，执行iframe页的方法：
+                iframeWin.commintToService(index);//调用子页面的方法，得到子页面返回的ids
+            },btn2: function(index, layero){
+                layer.close(index);
+                return false;
+            }
+        });
+    }
+    function addJob(){
+        layer.open({
+            type: 2,
+            title: '新增任务',
+            shadeClose: true,
+            shade: false,
+            maxmin: true, //开启最大化最小化按钮
+            area: ['900px', '560px'],
+            content: './addJob.html',
+            btn: ['提交', '取消'],
+            btn1: function(index, layero){
+                var body = layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']];//得到iframe页的窗口对象，执行iframe页的方法：
+                iframeWin.commintToService(index);//调用子页面的方法，得到子页面返回的ids
+            },btn2: function(index, layero){
+                layer.close(index);
+                return false;
+            }
+        });
+    }
+    function startJob(){
+        var rows= $('#jobTable').bootstrapTable('getSelections');
+        if(rows.length<1){
+            layer.msg("请至少选择一行数据");
+            return;
+        }
+        var list=[];
+        for(var i=0 ;i<rows.length;i++){
+            list.push(rows[i].jobName);
+        }
+        $.ajax({
+            url: '/job/resumejob',
+            type: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify(list),
+            success: function (data) {
+                var propertiesInfo=data;
+                layer.msg("操作成功:"+data.msg);
+                refreshTable();
+            },
+            error:function (data) {
+                layer.msg("操作失败:"+data);
+                refreshTable();
+            }
+        });
+    }
+    function stopJob(){
+        var rows= $('#jobTable').bootstrapTable('getSelections');
+        if(rows.length<1){
+            layer.msg("请至少选择一行数据");
+            return;
+        }
+
+        var list=[];
+        for(var i=0 ;i<rows.length;i++){
+            list.push(rows[i].jobName);
+        }
+        $.ajax({
+            url: '/job/pausejob',
+            type: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify(list),
+            success: function (data) {
+                layer.msg("操作成功:"+data.msg);
+                refreshTable();
+            },
+            error:function (data) {
+                layer.msg("操作失败:"+data.msg);
+                refreshTable();
+            }
+        });
+    }
+    function deleteJob(){
+        var rows= $('#jobTable').bootstrapTable('getSelections');
+        if(rows.length<1){
+            layer.msg("请至少选择一行数据");
+            return;
+        }
+        var list=[];
+        for(var i=0 ;i<rows.length;i++){
+            list.push(rows[i].jobName);
+        }
+        $.ajax({
+            url: '/job/deletejob',
+            type: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify(list),
+            success: function (data) {
+                layer.msg("操作成功!");
+                refreshTable();
+            },
+            error:function (data) {
+                layer.msg("操作失败:"+data.msg);
+                refreshTable();
+            }
+        });
+    }
+    function refreshTable(){
+        $('#jobTable').bootstrapTable('refresh');
+    }
+    function jobResultDetail(dem){
+        var name=$(dem).attr("jobName");
+        var type=$(dem).attr("jobType");
+        layer.open({
+            type: 2,
+            title: name,
+            shadeClose: true,
+            shade: false,
+            maxmin: true, //开启最大化最小化按钮
+            area: ['900px', '560px'],
+            content: './jobResultView.html?jobName='+name+"&jobType="+type,
+            /*btn: ['提交', '关闭'],
+            btn1: function(index, layero){
+                var body = layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']];//得到iframe页的窗口对象，执行iframe页的方法：
+                iframeWin.commintToService(index);//调用子页面的方法，得到子页面返回的ids
+            },btn2: function(index, layero){
+                layer.close(index);
+                return false;
+            }*/
+        });
+    }
+</script>
+</body>
+</html>

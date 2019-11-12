@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+
+    <meta charset="utf-8">
+    <link type="text/css" rel="stylesheet" href="../common/css/batch.css" data-wrm-key="_super" data-wrm-batch-type="context" media="all">
+
+
+
+
+    <title>问题导航器 - JIRA</title>
+    <link rel="search" type="application/opensearchdescription+xml" href="/osd.jsp" title="问题导航器 - JIRA"/>
+
+</head>
+
+
+
+
+
+<body id="jira" class="aui-layout aui-theme-default ka ajax-issue-search-and-view page-type-navigator navigator-issue-only" data-version="7.6.3" data-aui-version="6.1.0">
+<div id="page">
+    <header id="header" role="banner">
+
+
+
+
+
+
+
+        <script>
+            require(["jquery", "jira/license-banner"], function ($, licenseBanner) {
+                $(function () {
+                    licenseBanner.showLicenseBanner("");
+                    licenseBanner.showLicenseFlag("");
+                });
+            });
+        </script>
+
+
+
+
+
+
+
+
+
+
+
+        <nav class="aui-header aui-dropdown2-trigger-group" role="navigation" resolved="" data-aui-responsive="true">
+            <div class="aui-header-inner">
+                <div class="aui-header-primary">
+                    <h1 id="logo" class="aui-header-logo aui-header-logo-custom">
+                        <a href="http://192.168.6.23:8080/secure/MyJiraHome.jspa">
+                            <img src="/s/h8qsp4/76005/b6b48b2829824b869586ac216d119363/_/images/icon-jira-logo.png" alt="JIRA" data-aui-responsive-header-index="0"></a>
+                    </h1>
+                    <ul class="aui-nav" style="width: auto;" resolved="">
+                        <li>
+                            <a href="/secure/Dashboard.jspa" class=" aui-nav-link aui-dropdown2-trigger aui-dropdown2-ajax" id="home_link" aria-haspopup="true" aria-controls="home_link-content" title="查看和管理您的仪表板" accesskey="D" resolved="" aria-expanded="false">仪表板</a>
+                            <div class="aui-dropdown2 aui-style-default aui-layer" id="home_link-content" data-aui-dropdown2-ajax-key="home_link" resolved="" aria-hidden="true"></div>
+                        </li>
+                        <li>
+                            <a href="/browse/CYP" class=" aui-nav-link aui-dropdown2-trigger aui-dropdown2-ajax" id="browse_link" aria-haspopup="true" aria-controls="browse_link-content" title="查看最近项目和浏览项目列表" accesskey="优先级" resolved="" aria-expanded="false">项目</a>
+                            <div class="aui-dropdown2 aui-style-default aui-layer" id="browse_link-content" data-aui-dropdown2-ajax-key="browse_link" resolved="" aria-hidden="true"></div>
+                        </li>
+                        <li>
+                            <a href="/issues/" class=" aui-nav-link aui-dropdown2-trigger aui-dropdown2-ajax" id="find_link" aria-haspopup="true" aria-controls="find_link-content" title="搜索问题和查看最近问题" accesskey="我" resolved="" aria-expanded="false">问题</a>
+                            <div class="aui-dropdown2 aui-style-default aui-layer" id="find_link-content" data-aui-dropdown2-ajax-key="find_link" resolved="" aria-hidden="true"></div>
+                        </li>
+                        <li>
+                            <a href="/secure/RapidBoard.jspa" class=" aui-nav-link aui-dropdown2-trigger aui-dropdown2-ajax" id="greenhopper_menu" aria-haspopup="true" aria-controls="greenhopper_menu-content" title="使用JIRA Software管理您的项目" resolved="" aria-expanded="false">面板</a>
+                            <div class="aui-dropdown2 aui-style-default aui-layer" id="greenhopper_menu-content" data-aui-dropdown2-ajax-key="greenhopper_menu" resolved="" aria-hidden="true"></div>
+                        </li>
+                        <li id="create-menu">
+                            <a id="create_link" class="aui-button aui-button-primary aui-style create-issue " title="创建一个新的问题/缺陷/需求等等 ( 类型 'c' )" href="/secure/CreateIssue!default.jspa" accesskey="C">新建</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="aui-header-secondary">
+                    <ul class="aui-nav" resolved="">
+                        <li id="quicksearch-menu">
+                            <form action="/secure/QuickSearch.jspa" method="get" id="quicksearch" class="aui-quicksearch dont-default-focus ajs-dirty-warning-exempt">
+                                <input id="quickSearchInput" class="search" title="搜索 ( 类型 '/' )" placeholder="搜索" name="searchString" accesskey="Q" type="text">
+                                <input class="hidden" value="Search" type="submit">
+                            </form>
+                        </li>
+                        <li>
+                            <a class="jira-feedback-plugin" role="button" aria-haspopup="true" id="jira-header-feedback-link" href="#">
+                                <span class="aui-icon aui-icon-small jira-feedback-plugin-icon">向Atlassian提供您的反馈</span>
+                            </a>
+                        </li>
+
+
+
+                        <li id="system-help-menu">
+                            <a class="aui-nav-link aui-dropdown2-trigger" id="help_menu" aria-haspopup="true" href="https://docs.atlassian.com/jira/jsw-docs-076/" target="$textUtils.htmlEncode($rootHelpMenuItem.params.target)" title="帮助" resolved="" aria-controls="system-help-menu-content" aria-expanded="false">
+                                <span class="aui-icon aui-icon-small aui-iconfont-help">帮助</span>
+                            </a>
+                            <div id="system-help-menu-content" class="aui-dropdown2 aui-style-default aui-layer" resolved="" aria-hidden="true">
+                                <div class="aui-dropdown2-section">
+                                    <ul id="jira-help" class="aui-list-truncate">
+                                        <li>
+                                            <a id="gh_view_help" class="aui-nav-link " title="获取JIRA Software的在线帮助" href="https://docs.atlassian.com/jira/jsw-docs-076/" target="_blank">JIRA Software帮助</a>
+                                        </li>
+                                        <li>
+                                            <a id="view_core_help" class="aui-nav-link " title="前往获取JIRA Core的在线文档" href="https://docs.atlassian.com/jira/jcore-docs-076/" target="_blank">JIRA Core 帮助</a>
+                                        </li>
+                                        <li>
+                                            <a id="view_admin_help" class="aui-nav-link " title="前往查看最新的JIRA管理文档" href="https://docs.atlassian.com/jira/jadm-docs-076/" target="_blank">JIRA 管理员帮助</a>
+                                        </li>
+                                        <li>
+                                            <a id="keyshortscuthelp" class="aui-nav-link " title="获得更多JIRA快捷键信息 ( 类型 '?' )" href="/secure/ViewKeyboardShortcuts!default.jspa" target="_blank">快捷键</a>
+                                        </li>
+                                        <li>
+                                            <a id="view_about" class="aui-nav-link " title="获取 JIRA 的更多信息" href="/secure/AboutPage.jspa">关于 JIRA</a>
+                                        </li>
+                                        <li>
+                                            <a id="view_credits" class="aui-nav-link " title="查看开发Jira的研发团队" href="/secure/JiraCreditsPage!default.jspa" target="_blank">JIRA 研发团队</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+
+
+                        <li id="system-admin-menu">
+                            <a href="/plugins/servlet/applications/versions-licenses" id="admin_menu" class="aui-nav-link aui-dropdown2-trigger" aria-haspopup="true" title="管理" resolved="" aria-controls="system-admin-menu-content" aria-expanded="false">
+                                <span class="aui-icon aui-icon-small aui-iconfont-configure">管理</span>
+                            </a>
+                            <div id="system-admin-menu-content" class="aui-dropdown2 aui-style-default aui-layer" resolved="" aria-hidden="true">
+                                <div class="aui-dropdown2-section">
+                                    <strong>JIRA管理</strong>
+                                    <ul class="aui-list-truncate">
+                                        <li>
+                                            <a href="/plugins/servlet/applications/versions-licenses" class="aui-nav-link" id="admin_applications_menu">应用程序</a>
+                                        </li>
+                                        <li>
+                                            <a href="/secure/project/ViewProjects.jspa" class="aui-nav-link" id="admin_project_menu">项目</a>
+                                        </li>
+                                        <li>
+                                            <a href="/secure/admin/ViewIssueTypes.jspa" class="aui-nav-link" id="admin_issues_menu">问题</a>
+                                        </li>
+                                        <li>
+                                            <a href="/plugins/servlet/upm/marketplace" class="aui-nav-link" id="admin_plugins_menu">插件</a>
+                                        </li>
+                                        <li>
+                                            <a href="/secure/admin/user/UserBrowser.jspa" class="aui-nav-link" id="admin_users_menu">用户管理</a>
+                                        </li>
+                                        <li>
+                                            <a href="/secure/PostUpgradeLandingPage.jspa" class="aui-nav-link" id="admin_pulp_menu">最新升级报告</a>
+                                        </li>
+                                        <li>
+                                            <a href="/secure/admin/ViewApplicationProperties.jspa" class="aui-nav-link" id="admin_system_menu">系统</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+
+
+
+
+
+
+
+
+                        <li id="user-options">
+                            <a id="header-details-user-fullname" class="aui-dropdown2-trigger" aria-haspopup="true" data-username="huajun.zhang" data-displayname="华君 张" href="/secure/ViewProfile.jspa" title="华君 张的个人信息" resolved="" aria-controls="user-options-content" aria-expanded="false">
+            <span class="aui-avatar aui-avatar-small">
+                <span class="aui-avatar-inner">
+                    <img src="http://192.168.6.23:8080/secure/useravatar?size=small&amp;avatarId=10341" alt="华君 张的个人信息">
+                </span>
+            </span>
+                            </a>
+                            <div id="user-options-content" class="aui-dropdown2 aui-style-default aui-layer" resolved="" aria-hidden="true">
+                                <div class="aui-dropdown2-section">
+                                    <ul id="personal" class="aui-list-truncate">
+                                        <li>
+                                            <a id="view_profile" class="" title="查看和修改您的详细情况和配置" href="/secure/ViewProfile.jspa">用户信息</a>
+                                        </li>
+                                        <li>
+                                            <a id="upm-requests-link" class="" href="/plugins/servlet/upm/requests?source=header_user">Atlassian Marketplace</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="aui-dropdown2-section">
+                                    <strong>我的JIRA主页</strong>
+                                    <ul id="set_my_jira_home" class="aui-list-truncate">
+                                        <li>
+                                            <a id="set_my_jira_home_default" class="aui-dropdown2-radio interactive    " title="将我的JIRA主页设置到此仪表板。" href="/secure/UpdateMyJiraHome.jspa?target=com.atlassian.jira.jira-my-home-plugin%3Aset_my_jira_home_dashboard&amp;atl_token=BQCF-IXNC-TSBY-PTCZ|ae781fa5ca6355fd373ed5a36d06e4c85845df69|lin" resolved="" aria-checked="false" tabindex="0">仪表板</a>
+                                        </li>
+                                        <li>
+                                            <a id="greenhopper-my-jira-home-set" class="aui-dropdown2-radio interactive checked     aui-dropdown2-checked" title="设置 JIRA主页为面板。" href="/secure/UpdateMyJiraHome.jspa?target=com.pyxis.greenhopper.jira%3Agreenhopper-my-jira-home-set-51&amp;atl_token=BQCF-IXNC-TSBY-PTCZ|ae781fa5ca6355fd373ed5a36d06e4c85845df69|lin" resolved="" aria-checked="true" tabindex="0">面板</a>
+                                        </li>
+                                        <li>
+                                            <a id="set_my_jira_home_issuenav" class="aui-dropdown2-radio interactive    " title="设置我的JIRA主页到问题导航器。" href="/secure/UpdateMyJiraHome.jspa?target=com.atlassian.jira.jira-my-home-plugin%3Aset_my_jira_home_issue&amp;atl_token=BQCF-IXNC-TSBY-PTCZ|ae781fa5ca6355fd373ed5a36d06e4c85845df69|lin" resolved="" aria-checked="false" tabindex="0">问题导航器</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="aui-dropdown2-section">
+                                    <ul id="system" class="aui-list-truncate">
+                                        <li>
+                                            <a id="log_out" class="" title="注销身份并且取消任何自动登录。" href="/logout?atl_token=BQCF-IXNC-TSBY-PTCZ|ae781fa5ca6355fd373ed5a36d06e4c85845df69|lin">注销</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- .aui-header-inner-->
+        </nav>
+        <!-- .aui-header -->
+    </header>
+
+
+
+
+    <section id="content" role="main">
+
+        <div class="issue-container" tabindex="-1" style="position: relative;">
+            <div id="issue-content" class="issue-edit-form">
+                <header id="stalker" class="issue-header js-stalker" style="">
+                    <div class="issue-header-content">
+                        <header class="aui-page-header">
+                            <div class="aui-page-header-inner">
+                                <div class="aui-page-header-image">
+<span id="10102" class="aui-avatar aui-avatar-large aui-avatar-project jira-system-avatar">
+<span class="aui-avatar-inner">
+<img id="project-avatar" alt="上传的图像用于项目: '策赢网络平台'" src="http://192.168.6.23:8080/secure/projectavatar?avatarId=10324"></span>
+</span>
+                                </div>
+                                <!-- .aui-page-header-image -->
+                                <div class="aui-page-header-main">
+                                    <ol class="aui-nav aui-nav-breadcrumbs" resolved="">
+                                        <li>
+                                            <a id="project-name-val" href="/browse/CYP">策赢网络平台</a>
+                                        </li>
+                                        <li>
+                                            <a class="issue-link" data-issue-key="CYP-568" href="/browse/CYP-568" id="key-val" rel="11522">CYP-568</a>
+                                        </li>
+                                    </ol>
+                                    <h1 id="summary-val" class="editable-field inactive" title="点击开始编辑">CLONE - 报价时，只填写“预计还款日期”，利率修改为非必填项<span class="overlay-icon aui-icon aui-icon-small aui-iconfont-edit"></span>
+                                    </h1>
+                                </div>
+                                <!-- .aui-page-header-main -->
+                                <div class="aui-page-header-actions">
+                                    <div id="issue-header-pager">
+                                        <ul class="ajax ops page-navigation">
+                                            <li class="previous">
+                                                <a data-id="11521" data-key="CYP-567" href="/browse/CYP-567" id="previous-issue" rel="CYP-567" title="上一问题 'CYP-567' ( 类型 'k' )">
+<span class="icon icon-page-prev">
+<span>上一问题 'CYP-567'</span>
+</span>
+                                                </a>
+                                            </li>
+                                            <li class="showing">2 之 3</li>
+                                            <li class="next">
+                                                <a data-id="11006" data-key="CYP-553" href="/browse/CYP-553" id="next-issue" rel="CYP-553" title="下个问题 'CYP-553' ( 类型 'j' )">
+<span class="icon icon-page-next">
+<span>下个问题 'CYP-553'</span>
+</span>
+                                                </a>
+                                            </li>
+                                            <li class="return">
+                                                <a id="return-to-search" href="/issues/" title="返回到搜索 ( 类型 'u' )">返回到搜索</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- .aui-page-header-actions -->
+                            </div>
+                            <!-- .aui-page-header-inner -->
+                        </header>
+                        <!-- .aui-page-header -->
+                        <div class="command-bar">
+                            <div>
+                                <div class="ops-cont">
+                                    <div class="ops-menus aui-toolbar">
+                                        <div class="toolbar-split toolbar-split-left">
+                                            <ul id="opsbar-edit-issue_container" class="toolbar-group pluggable-ops">
+                                                <li class="toolbar-item">
+                                                    <a id="edit-issue" title="编辑这个问题" class="toolbar-trigger issueaction-edit-issue" href="/secure/EditIssue!default.jspa?id=11522">
+                                                        <span class="icon aui-icon aui-icon-small aui-iconfont-edit"></span>
+                                                        <span class="trigger-label">编辑</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <ul id="opsbar-comment-issue_container" class="toolbar-group pluggable-ops">
+                                                <li class="toolbar-item">
+                                                    <a id="comment-issue" title="在这个问题上添加评论" class="toolbar-trigger issueaction-comment-issue add-issue-comment inline-comment" href="/secure/AddComment!default.jspa?id=11522">
+                                                        <span class="icon aui-icon aui-icon-small aui-iconfont-comment icon-comment"></span>
+                                                        <span class="trigger-label">备注</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <ul id="opsbar-opsbar-operations" class="toolbar-group pluggable-ops">
+                                                <li class="toolbar-item">
+                                                    <a id="assign-issue" title="分配这个问题给某人" class="toolbar-trigger issueaction-assign-issue" href="/secure/AssignIssue!default.jspa?id=11522">
+                                                        <span class="trigger-label">分配</span>
+                                                    </a>
+                                                </li>
+                                                <li class="toolbar-item">
+                                                    <div>
+                                                        <a href="#" id="opsbar-operations_more" aria-haspopup="true" class="toolbar-trigger aui-button aui-style-default aui-dropdown2-trigger" resolved="" aria-controls="opsbar-operations_more_drop" aria-expanded="false">
+                                                            <span class="dropdown-text">更多</span>
+                                                        </a>
+                                                        <div id="opsbar-operations_more_drop" class="aui-style-default aui-dropdown2 aui-layer" resolved="" aria-hidden="true">
+                                                            <div class="aui-dropdown2-section">
+                                                                <ul>
+                                                                    <li class="aui-list-item">
+                                                                        <a href="/secure/CreateWorklog!default.jspa?id=11522" class="issueaction-log-work" title="为这个问题记录工作日志" id="log-work">
+                                                                            <span class="trigger-label">登录工作</span>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="aui-dropdown2-section">
+                                                                <ul>
+                                                                    <li class="aui-list-item">
+                                                                        <a href="/secure/AttachFile!default.jspa?id=11522" class="unified-attach-file" title="附加一个或多个文件至这个问题" id="attach-file">
+                                                                            <span class="trigger-label">附加文件</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="aui-list-item">
+                                                                        <a href="/secure/ShowAttachScreenshotFormAction!default.jspa?id=11522" class="issueaction-attach-screenshot-html5" id="attach-screenshot-html5">
+                                                                            <span class="trigger-label">附加页面截图</span>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="aui-dropdown2-section">
+                                                                <ul>
+                                                                    <li class="aui-list-item">
+                                                                        <a href="/secure/VoteOrWatchIssue.jspa?atl_token=BQCF-IXNC-TSBY-PTCZ|ae781fa5ca6355fd373ed5a36d06e4c85845df69|lin&amp;id=11522&amp;vote=vote" class="issueaction-vote-issue" title="为这个问题表决" id="toggle-vote-issue">
+                                                                            <span class="trigger-label">添加表决</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="aui-list-item">
+                                                                        <a href="/secure/ViewVoters!default.jspa?id=11522" class="issueaction-view-voters" title="查看此问题的表决人" id="view-voters">
+                                                                            <span class="trigger-label">查看表决</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="aui-list-item">
+                                                                        <a href="/secure/VoteOrWatchIssue.jspa?atl_token=BQCF-IXNC-TSBY-PTCZ|ae781fa5ca6355fd373ed5a36d06e4c85845df69|lin&amp;id=11522&amp;watch=watch" class="issueaction-watch-issue" title="开始关注这个问题" id="toggle-watch-issue">
+                                                                            <span class="trigger-label">关注问题</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="aui-list-item">
+                                                                        <a href="/secure/ManageWatchers!default.jspa?id=11522" class="issueaction-manage-watchers" title="管理这个问题的关注者" id="manage-watchers">
+                                                                            <span class="trigger-label">管理关注列表</span>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="aui-dropdown2-section">
+                                                                <ul>
+                                                                    <li class="aui-list-item">
+                                                                        <a href="#" class="issueaction-create-linked-issue" id="create-linked-issue">
+                                                                            <span class="trigger-label">创建链接问题</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="aui-list-item">
+                                                                        <a href="/secure/MoveIssue!default.jspa?id=11522" class="issueaction-move-issue" title="移动这个问题到另一个项目或问题类型。" id="move-issue">
+                                                                            <span class="trigger-label">移动</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="aui-list-item">
+                                                                        <a href="/secure/LinkJiraIssue!default.jspa?id=11522" class="issueaction-link-issue" title="链接此问题到另一个问题或项目" id="link-issue">
+                                                                            <span class="trigger-label">链接</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="aui-list-item">
+                                                                        <a href="/secure/CloneIssueDetails!default.jspa?id=11522" class="issueaction-clone-issue" title="复制这个问题" id="clone-issue">
+                                                                            <span class="trigger-label">复制</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="aui-list-item">
+                                                                        <a href="/secure/EditLabels!default.jspa?id=11522" class="issueaction-edit-labels" title="编辑此问题的标签" id="edit-labels">
+                                                                            <span class="trigger-label">标签</span>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="aui-dropdown2-section">
+                                                                <ul>
+                                                                    <li class="aui-list-item">
+                                                                        <a href="/secure/DeleteIssue!default.jspa?id=11522" class="issueaction-delete-issue" title="删除这个问题" id="delete-issue">
+                                                                            <span class="trigger-label">删除</span>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <ul id="opsbar-opsbar-transitions" class="toolbar-group pluggable-ops">
+                                                <li class="toolbar-item">
+                                                    <a id="action_id_31" class="toolbar-trigger issueaction-workflow-transition" href="/secure/WorkflowUIDispatcher.jspa?id=11522&amp;action=31&amp;atl_token=BQCF-IXNC-TSBY-PTCZ|ae781fa5ca6355fd373ed5a36d06e4c85845df69|lin">
+                                                        <span class="trigger-label">非问题单</span>
+                                                    </a>
+                                                </li>
+                                                <li class="toolbar-item">
+                                                    <a id="action_id_41" class="toolbar-trigger issueaction-workflow-transition" href="/secure/WorkflowUIDispatcher.jspa?id=11522&amp;action=41&amp;atl_token=BQCF-IXNC-TSBY-PTCZ|ae781fa5ca6355fd373ed5a36d06e4c85845df69|lin">
+                                                        <span class="trigger-label">重写问题单</span>
+                                                    </a>
+                                                </li>
+                                                <li class="toolbar-item">
+                                                    <a id="action_id_71" class="toolbar-trigger issueaction-workflow-transition" href="/secure/WorkflowUIDispatcher.jspa?id=11522&amp;action=71&amp;atl_token=BQCF-IXNC-TSBY-PTCZ|ae781fa5ca6355fd373ed5a36d06e4c85845df69|lin">
+                                                        <span class="trigger-label">转开发解决问提</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <ul id="opsbar-opsbar-admin" class="toolbar-group pluggable-ops">
+                                                <li class="toolbar-item">
+                                                    <div>
+                                                        <a href="#" id="opsbar-admin_more" aria-haspopup="true" class="toolbar-trigger aui-button aui-style-default aui-dropdown2-trigger" resolved="" aria-controls="opsbar-admin_more_drop" aria-expanded="false">
+                                                            <span class="dropdown-text">管理</span>
+                                                        </a>
+                                                        <div id="opsbar-admin_more_drop" class="aui-style-default aui-dropdown2 aui-layer" resolved="" aria-hidden="true">
+                                                            <div class="aui-dropdown2-section">
+                                                                <ul>
+                                                                    <li class="aui-list-item">
+                                                                        <a href="/secure/admin/ViewCustomFields.jspa" class="issueaction-fields-add" title="添加域到当前问题界面。" id="com.atlassian.jira.jira-project-config-plugin:add-custom-field">
+                                                                            <span class="trigger-label">添加域</span>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="aui-dropdown2-section">
+                                                                <ul>
+                                                                    <li class="aui-list-item">
+                                                                        <a href="/notimportant" class="whereismycf-trigger" title="查找域名" id="jira-operations-whereismycf-trigger">
+                                                                            <span class="trigger-label">查找域名</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="aui-list-item">
+                                                                        <a href="/notimportant" class="permissionhelper-trigger" title="了解某用户为何有或者没有某些权限" id="jira-operations-permissionhelper-trigger">
+                                                                            <span class="trigger-label">权限助手</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="aui-list-item">
+                                                                        <a href="/notimportant" class="notificationhelper-trigger" title="查找为什么用户接收或不接收通知的这一问题。" id="jira-operations-notificationhelper-trigger">
+                                                                            <span class="trigger-label">通知方案助手</span>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="toolbar-split toolbar-split-right">
+                                            <ul id="opsbar-jira.issue.tools" class="toolbar-group pluggable-ops">
+                                                <li class="toolbar-item">
+                                                    <a id="jira-share-trigger" class="toolbar-trigger viewissue-share" href="#" original-title="通过发送电邮和其他人分享此问题信息">
+                                                        <span class="icon aui-icon aui-icon-small aui-iconfont-share"></span>
+                                                        <span class="trigger-label"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="toolbar-item">
+                                                    <div>
+                                                        <a href="#" id="viewissue-export" aria-haspopup="true" class="toolbar-trigger aui-button aui-style-default aui-dropdown2-trigger" original-title="导出此问题到其它格式" resolved="" aria-controls="viewissue-export_drop" aria-expanded="false">
+                                                            <span class="icon icon-default aui-icon aui-icon-small aui-iconfont-export"></span>
+                                                            <span class="dropdown-text">导出</span>
+                                                        </a>
+                                                        <div id="viewissue-export_drop" class="aui-style-default aui-dropdown2 aui-layer" resolved="" aria-hidden="true">
+                                                            <ul>
+                                                                <li class="aui-list-item">
+                                                                    <a href="/si/jira.issueviews:issue-xml/CYP-568/CYP-568.xml" id="jira.issueviews:issue-xml">
+                                                                        <span class="trigger-label">XML</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="aui-list-item">
+                                                                    <a href="/si/jira.issueviews:issue-word/CYP-568/CYP-568.doc" id="jira.issueviews:issue-word">
+                                                                        <span class="trigger-label">Word</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="aui-list-item">
+                                                                    <a href="/si/jira.issueviews:issue-html/CYP-568/CYP-568.html" id="jira.issueviews:issue-html">
+                                                                        <span class="trigger-label">打印</span>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                <div class="issue-body-content">
+                    <div class="aui-group issue-body">
+                        <div class="aui-item issue-main-column">
+                            <div id="details-module" class="module toggle-wrap">
+                                <div id="details-module_heading" class="mod-header">
+                                    <ul class="ops"></ul>
+                                    <h2 class="toggle-title">详情</h2>
+                                </div>
+                                <div class="mod-content">
+
+
+
+
+
+
+
+
+
+
+                                    <ul id="issuedetails" class="property-list two-cols">
+
+                                        <li class="item">
+                                            <div class="wrap">
+                                                <strong class="name">类型:</strong>
+                                                <span id="type-val" class="value editable-field inactive" title="点击开始编辑">
+                        <img alt="" src="/secure/viewavatar?size=xsmall&amp;avatarId=10318&amp;avatarType=issuetype" title="任务 - 需要完成的任务。" width="16" height="16"> 任务
+        <span class="overlay-icon aui-icon aui-icon-small aui-iconfont-edit"></span>
+</span>
+                                            </div>
+                                        </li>
+                                        <li class="item item-right">
+                                            <div class="wrap">
+                                                <strong class="name">状态:</strong>
+                                                <span id="status-val" class="value">
+                                <span class=" jira-issue-status-lozenge aui-lozenge jira-issue-status-lozenge-yellow jira-issue-status-lozenge-indeterminate jira-issue-status-lozenge-max-width-medium" data-tooltip="<span class=&quot;jira-issue-status-tooltip-title&quot;>已分配</span>">已分配</span>
+            </span>
+                                                <span class="status-view">(<a href="/browse/CYP-568?workflowName=CYP%3A+Stanard+Test+workflow&amp;stepId=5" class="issueaction-viewworkflow jira-workflow-designer-link new-workflow-designer" title="CYP: Stanard Test workflow: CYP-568" resolved="">查看工作流</a>)</span>
+                                            </div>
+                                        </li>
+                                        <li class="item new">
+                                            <div class="wrap">
+                                                <strong class="name">优先级:</strong>
+                                                <span id="priority-val" class="value editable-field inactive" title="点击开始编辑">
+                                        <img alt="" src="/images/icons/priorities/highest.svg" title="Highest - This problem will block progress." width="16" height="16">  Highest                     <span class="overlay-icon aui-icon aui-icon-small aui-iconfont-edit"></span>
+</span>
+                                            </div>
+                                        </li>
+                                        <li class="item item-right">
+                                            <div class="wrap">
+                                                <strong class="name">解决结果:</strong>
+                                                <span id="resolution-val" class="value unresolved">
+                            未解决
+                    </span>
+                                            </div>
+                                        </li>
+
+                                        <li class="item">
+                                            <div class="wrap">
+                                                <strong class="name">影响版本:</strong>
+                                                <span id="versions-val" class="value editable-field inactive" title="点击开始编辑">
+                                        <span class="shorten" id="versions-field" resolved="" style="height: auto;">
+                                            <span title="CYP-1.8.3-R5121 ">CYP-1.8.3-R5121</span>
+                                    </span>
+                    <span class="overlay-icon aui-icon aui-icon-small aui-iconfont-edit"></span>
+</span>
+                                            </div>
+                                        </li>
+                                        <li class="item item-right">
+                                            <div class="wrap">
+                                                <strong class="name">修复的版本:</strong>
+                                                <span id="fixfor-val" class="value editable-field inactive" title="点击开始编辑">
+                                        无
+                    <span class="overlay-icon aui-icon aui-icon-small aui-iconfont-edit"></span>
+</span>
+                                            </div>
+                                        </li>
+
+                                        <li class="item">
+                                            <div class="wrap">
+                                                <strong class="name">模块:</strong>
+                                                <span id="components-val" class="value editable-field inactive" title="点击开始编辑">
+                                        <span class="shorten" id="components-field" resolved="" style="height: auto;">
+                                            <a href="/issues/?jql=project+%3D+CYP+AND+component+%3D+%E5%BA%94%E4%BB%98%E8%B4%A6%E6%AC%BE" title="应付账款 ">应付账款</a>
+                                    </span>
+                    <span class="overlay-icon aui-icon aui-icon-small aui-iconfont-edit"></span>
+</span>
+                                            </div>
+                                        </li>
+
+
+                                        <li class="item full-width">
+                                            <div class="wrap" id="wrap-labels">
+                                                <strong class="name">标签:</strong>
+                                                <div class="labels-wrap value">
+                                                    <span class="labels" id="labels-11522-value">无</span>
+                                                    <a class="aui-icon aui-icon-small aui-iconfont-edit edit-labels" id="edit-labels-11522-labels" href="/secure/EditLabels!default.jspa?id=11522&amp;noLink=false">
+                                                        <span>标签</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                    <div id="customfieldmodule">
+                                        <div class="aui-tabs horizontal-tabs" id="customfield-tabs" role="application">
+                                            <div id="customfield-panel-1" class="tabs-pane active-pane" role="tabpanel" aria-hidden="false">
+                                                <ul class="property-list">
+                                                    <li id="rowForcustomfield_10104" class="item">
+                                                        <div class="wrap">
+                                                            <strong title="结果影响" class="name">结果影响:</strong>
+                                                            <div id="customfield_10104-val" class="value type-multiselect editable-field inactive" data-fieldtype="multiselect" data-fieldtypecompletekey="com.atlassian.jira.plugin.system.customfieldtypes:multiselect" title="点击开始编辑">
+
+
+
+                                                                <div class="shorten" id="customfield_10104-field" resolved="" style="height: auto;">
+                                                                    <span>业务功能</span>
+                                                                </div>
+
+                                                                <span class="overlay-icon aui-icon aui-icon-small aui-iconfont-edit"></span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li id="rowForcustomfield_10105" class="item">
+                                                        <div class="wrap">
+                                                            <strong title="浏览器" class="name">浏览器:</strong>
+                                                            <div id="customfield_10105-val" class="value type-select editable-field inactive" data-fieldtype="select" data-fieldtypecompletekey="com.atlassian.jira.plugin.system.customfieldtypes:select" title="点击开始编辑">
+                                                                IE
+
+                                                                <span class="overlay-icon aui-icon aui-icon-small aui-iconfont-edit"></span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li id="rowForcustomfield_10106" class="item">
+                                                        <div class="wrap">
+                                                            <strong title="出现概率" class="name">出现概率:</strong>
+                                                            <div id="customfield_10106-val" class="value type-select editable-field inactive" data-fieldtype="select" data-fieldtypecompletekey="com.atlassian.jira.plugin.system.customfieldtypes:select" title="点击开始编辑">
+                                                                &gt; 50%
+
+                                                                <span class="overlay-icon aui-icon aui-icon-small aui-iconfont-edit"></span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="descriptionmodule" class="module toggle-wrap">
+                                <div id="descriptionmodule_heading" class="mod-header">
+                                    <ul class="ops"></ul>
+                                    <h2 class="toggle-title">描述</h2>
+                                </div>
+                                <div class="mod-content">
+                                    <div id="description-val" class="field-ignore-highlight editable-field inactive" title="点击开始编辑">
+                                        <div class="user-content-block">
+                                            <p>由于中原银行和渤海银行提出，最新业务将以票据作为出账方式，因此报价环节无法填写利率等信息，只填写“预计还款日期”，利率修改为非必填项。</p>
+                                        </div>
+                                        <span class="overlay-icon aui-icon aui-icon-small aui-iconfont-edit"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="dnd-metadata" class="module toggle-wrap">
+                                <div id="dnd-metadata_heading" class="mod-header">
+                                    <ul class="ops"></ul>
+                                    <h2 class="toggle-title">附件</h2>
+                                </div>
+                                <div class="mod-content">
+                                    <div id="dnd-metadata-webpanel" data-can-attach="true" data-project-type="business" data-upload-limit="50485760" data-thumbnails-allowed="true"></div>
+                                </div>
+                            </div>
+                            <div id="attachmentmodule" class="module toggle-wrap attachments-drop-zone-parent">
+                                <div id="attachmentmodule_heading" class="mod-header">
+                                    <ul class="ops">
+                                        <li>
+                                            <a id="add-attachments-link" href="/secure/AttachFile!default.jspa?id=11522" class="issueaction-attach-file aui-icon aui-icon-small aui-iconfont-add issueaction-aui-icon" title="附加一个或多个文件至这个问题">
+                                                <span>附加一个或多个文件至这个问题</span>
+                                            </a>
+                                        </li>
+                                        <li class="drop">
+                                            <div class="aui-dd-parent">
+                                                <a href="#" class="icon drop-menu js-default-dropdown" title="选项" resolved="" id="AJS_DROPDOWN__33" aria-controls="AJS_DROPDOWN__33_drop" aria-haspopup="true" aria-expanded="false">
+                                                    <span>选项</span>
+                                                </a>
+                                                <div class="aui-dropdown-content aui-list">
+                                                    <ul id="attachment-sorting-options" class="aui-list-section aui-first">
+                                                        <li class="aui-list-item">
+                                                            <a id="attachment-sort-key-name" href="/browse/CYP-568?attachmentSortBy=fileName#attachmentmodule" class="aui-list-checked aui-checked aui-list-item-link" title="viewissue.subtasks.tab.show.all.name">
+                                                                <span>按名称排序</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="aui-list-item">
+                                                            <a id="attachment-sort-key-date" href="/browse/CYP-568?attachmentSortBy=dateTime#attachmentmodule" class="aui-list-checked aui-list-item-link" title="按日期排序">
+                                                                <span>按日期排序</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                    <ul id="attachment-sorting-order-options" class="aui-list-section">
+                                                        <li class="aui-list-item">
+                                                            <a id="attachment-sort-direction-asc" href="/browse/CYP-568?attachmentOrder=asc#attachmentmodule" class="aui-list-checked aui-checked aui-list-item-link" title="升序">
+                                                                <span>升序</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="aui-list-item">
+                                                            <a id="attachment-sort-direction-desc" href="/browse/CYP-568?attachmentOrder=desc#attachmentmodule" class="aui-list-checked aui-list-item-link" title="降序">
+                                                                <span>降序</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                    <ul id="attachment-view-mode-options" class="aui-list-section">
+                                                        <li class="aui-list-item">
+                                                            <a id="attachment-view-mode-gallery" href="/browse/CYP-568?attachmentViewMode=gallery#attachmentmodule" class="aui-list-checked aui-checked aui-list-item-link" title="缩略图">
+                                                                <span>缩略图</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="aui-list-item">
+                                                            <a id="attachment-view-mode-list" href="/browse/CYP-568?attachmentViewMode=list#attachmentmodule" class="aui-list-checked aui-list-item-link" title="列表">
+                                                                <span>列表</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                    <ul id="attachment-manage-options" class="aui-list-section aui-last">
+                                                        <li class="aui-list-item">
+                                                            <a id="aszip" href="/secure/attachmentzip/11522.zip" class="aui-list-checked aui-list-item-link" title="压缩附件并全部下载">
+                                                                <span>下载全部</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="aui-list-item">
+                                                            <a id="manage-attachment-link" href="/secure/ManageAttachments.jspa?id=11522" class="aui-list-checked aui-list-item-link" title="管理/删除附件">
+                                                                <span>管理附件</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <h2 class="toggle-title">附件</h2>
+                                </div>
+                                <div class="mod-content issue-drop-zone">
+                                    <div duitype="dndattachment/dropzones/AttachmentsDropZone" class="issue-drop-zone -dui-type-parsed" data-upload-limit="50485760" data-upload-size="48.15 MB">
+                                        <div class="issue-drop-zone__target"></div>
+                                        <span class="issue-drop-zone__text">
+<span class="issue-drop-zone__drop-icon"> </span> 添加附件或 <button type="button" class="issue-drop-zone__button"> 浏览.</button>
+<input class="issue-drop-zone__file ignore-inline-attach" multiple="" type="file"></span>
+                                    </div>
+                                    <ol id="attachment_thumbnails" class="item-attachments" data-sort-key="fileName" data-sort-order="asc"></ol>
+                                </div>
+                            </div>
+                            <div id="activitymodule" class="module toggle-wrap">
+                                <div id="activitymodule_heading" class="mod-header">
+                                    <ul class="ops"></ul>
+                                    <h2 class="toggle-title">活动日志</h2>
+                                </div>
+                                <div class="mod-content">
+
+
+
+
+
+
+
+
+
+
+                                    <div class="tabwrap tabs2">
+
+                                        <ul id="issue-tabs" class="tabs horizontal">
+
+                                            <li class="active" id="all-tabpanel" data-id="all-tabpanel" data-key="com.atlassian.jira.plugin.system.issuetabpanels:all-tabpanel" data-label="全部" data-href="/browse/CYP-568?page=com.atlassian.jira.plugin.system.issuetabpanels:all-tabpanel">
+                                                <strong tabindex="0">全部</strong>
+                                            </li>
+
+                                            <li data-id="comment-tabpanel" data-key="com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel" data-label="注释" data-href="/browse/CYP-568?page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel">
+                                                <a class="ajax-activity-content" id="comment-tabpanel" href="/browse/CYP-568?page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel">
+                                                    <strong>注释</strong>
+                                                </a>
+                                            </li>
+
+                                            <li data-id="worklog-tabpanel" data-key="com.atlassian.jira.plugin.system.issuetabpanels:worklog-tabpanel" data-label="工作日志" data-href="/browse/CYP-568?page=com.atlassian.jira.plugin.system.issuetabpanels:worklog-tabpanel">
+                                                <a class="ajax-activity-content" id="worklog-tabpanel" href="/browse/CYP-568?page=com.atlassian.jira.plugin.system.issuetabpanels:worklog-tabpanel">
+                                                    <strong>工作日志</strong>
+                                                </a>
+                                            </li>
+
+                                            <li data-id="changehistory-tabpanel" data-key="com.atlassian.jira.plugin.system.issuetabpanels:changehistory-tabpanel" data-label="改动记录" data-href="/browse/CYP-568?page=com.atlassian.jira.plugin.system.issuetabpanels:changehistory-tabpanel">
+                                                <a class="ajax-activity-content" id="changehistory-tabpanel" href="/browse/CYP-568?page=com.atlassian.jira.plugin.system.issuetabpanels:changehistory-tabpanel">
+                                                    <strong>改动记录</strong>
+                                                </a>
+                                            </li>
+
+                                            <li data-id="activity-stream-issue-tab" data-key="com.atlassian.streams.streams-jira-plugin:activity-stream-issue-tab" data-label="活动日志" data-href="/browse/CYP-568?page=com.atlassian.streams.streams-jira-plugin:activity-stream-issue-tab">
+                                                <a class="ajax-activity-content" id="activity-stream-issue-tab" href="/browse/CYP-568?page=com.atlassian.streams.streams-jira-plugin:activity-stream-issue-tab">
+                                                    <strong>活动日志</strong>
+                                                </a>
+                                            </li>
+                                        </ul>
+
+                                        <div class="sortwrap">
+                                            <a class="issue-activity-sort-link ajax-activity-content" rel="nofollow" data-tab-sort="" data-order="desc" href="/browse/CYP-568?actionOrder=desc" title="升序- 点击点降序排序">
+                                                <span class="aui-icon aui-icon-small aui-iconfont-up">升序- 点击点降序排序</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="issuePanelWrapper">
+                                        <div class="issuePanelProgress"></div>
+                                        <div class="issuePanelContainer" id="issue_actions_container">
+
+
+                                            <div class="issue-data-block" id="issuecreated-11522">
+                                                <div class="actionContainer">
+                                                    <div class="action-details" id="issuecreateddetails-11522">
+
+
+                                                        <a class="user-hover user-avatar" rel="xinhuan.yang" id="issuecreator_11522" href="/secure/ViewProfile.jspa?name=xinhuan.yang">
+<span class="aui-avatar aui-avatar-xsmall">
+<span class="aui-avatar-inner">
+<img src="http://192.168.6.23:8080/secure/useravatar?size=small&amp;avatarId=10341" alt="xinhuan.yang"></span>
+</span> 信欢 杨</a>
+                                                        创建问题 - <span class="date" title="21/二月/19 9:21 上午">
+<time class="livestamp" datetime="2019-02-21T09:21:54+0800">21/二月/19 9:21 上午</time>
+</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+
+                                            <div class="issue-data-block" id="changehistory-17757">
+                                                <div class="actionContainer">
+                                                    <div class="action-details" id="changehistorydetails_17757">
+
+
+
+
+                                                        <a class="user-hover user-avatar" rel="xinhuan.yang" id="changehistoryauthor_17757" href="/secure/ViewProfile.jspa?name=xinhuan.yang">
+<span class="aui-avatar aui-avatar-xsmall">
+<span class="aui-avatar-inner">
+<img src="http://192.168.6.23:8080/secure/useravatar?size=xsmall&amp;avatarId=10341" alt="xinhuan.yang"></span>
+</span> 信欢 杨</a>
+                                                        进行了改变  - <span class="date" title="21/二月/19 9:21 上午">
+<time class="livestamp" datetime="2019-02-21T09:21:55+0800">21/二月/19 9:21 上午</time>
+</span>
+                                                    </div>
+                                                    <div class="changehistory action-body">
+                                                        <table id="changehistory_17757" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                            <thead>
+                                                            <tr>
+                                                                <th width="20%">域</th>
+                                                                <th width="40%">原值</th>
+                                                                <th width="40%">新值</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td class="activity-name" width="20%">
+                                                                    链接
+                                                                </td>
+                                                                <td class="activity-old-val" width="40%">
+                                                                </td>
+                                                                <td class="activity-new-val" width="40%">
+                                                                    This issue clones <a href="/browse/CYP-567" title="报价时，只填写“预计还款日期”，利率修改为非必填项" class="issue-link" data-issue-key="CYP-567">CYP-567</a>
+                                                                    <span class="hist-value">[    <a href="/browse/CYP-567" title="报价时，只填写“预计还款日期”，利率修改为非必填项" class="issue-link" data-issue-key="CYP-567">CYP-567</a>
+]</span>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+
+                                            <div class="issue-data-block" id="changehistory-17759">
+                                                <div class="actionContainer">
+                                                    <div class="action-details" id="changehistorydetails_17759">
+
+
+
+
+                                                        <a class="user-hover user-avatar" rel="xinhuan.yang" id="changehistoryauthor_17759" href="/secure/ViewProfile.jspa?name=xinhuan.yang">
+<span class="aui-avatar aui-avatar-xsmall">
+<span class="aui-avatar-inner">
+<img src="http://192.168.6.23:8080/secure/useravatar?size=xsmall&amp;avatarId=10341" alt="xinhuan.yang"></span>
+</span> 信欢 杨</a>
+                                                        进行了改变  - <span class="date" title="21/二月/19 9:22 上午">
+<time class="livestamp" datetime="2019-02-21T09:22:47+0800">21/二月/19 9:22 上午</time>
+</span>
+                                                    </div>
+                                                    <div class="changehistory action-body">
+                                                        <table id="changehistory_17759" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td class="activity-name" width="20%">
+                                                                    链接
+                                                                </td>
+                                                                <td class="activity-old-val" width="40%">
+                                                                    This issue clones <a href="/browse/CYP-567" title="报价时，只填写“预计还款日期”，利率修改为非必填项" class="issue-link" data-issue-key="CYP-567">CYP-567</a>
+                                                                    <span class="hist-value">[    <a href="/browse/CYP-567" title="报价时，只填写“预计还款日期”，利率修改为非必填项" class="issue-link" data-issue-key="CYP-567">CYP-567</a>
+]</span>
+                                                                </td>
+                                                                <td class="activity-new-val" width="40%">
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+
+                                            <div class="issue-data-block" id="changehistory-17761">
+                                                <div class="actionContainer">
+                                                    <div class="action-details" id="changehistorydetails_17761">
+
+
+
+
+                                                        <a class="user-hover user-avatar" rel="xinhuan.yang" id="changehistoryauthor_17761" href="/secure/ViewProfile.jspa?name=xinhuan.yang">
+<span class="aui-avatar aui-avatar-xsmall">
+<span class="aui-avatar-inner">
+<img src="http://192.168.6.23:8080/secure/useravatar?size=xsmall&amp;avatarId=10341" alt="xinhuan.yang"></span>
+</span> 信欢 杨</a>
+                                                        进行了改变  - <span class="date" title="21/二月/19 9:23 上午">
+<time class="livestamp" datetime="2019-02-21T09:23:24+0800">21/二月/19 9:23 上午</time>
+</span>
+                                                    </div>
+                                                    <div class="changehistory action-body">
+                                                        <table id="changehistory_17761" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td class="activity-name" width="20%">
+                                                                    状态
+                                                                </td>
+                                                                <td class="activity-old-val" width="40%">
+                                                                    Open
+                                                                    <span class="hist-value">[    1
+]</span>
+                                                                </td>
+                                                                <td class="activity-new-val" width="40%">
+                                                                    Assigned
+                                                                    <span class="hist-value">[    10100
+]</span>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="addcomment" class="module">
+                                <div id="addcomment" class="module">
+                                    <div class="mod-content">
+                                        <form action="/secure/AddComment.jspa?atl_token=BQCF-IXNC-TSBY-PTCZ%7Cae781fa5ca6355fd373ed5a36d06e4c85845df69%7Clin" class="aui top-label ajs-dirty-warning-exempt" id="issue-comment-add" method="post">
+                                            <div class="form-body">
+                                                <div class="hidden">
+                                                    <input name="atl_token" value="BQCF-IXNC-TSBY-PTCZ|ae781fa5ca6355fd373ed5a36d06e4c85845df69|lin" type="hidden">
+                                                    <input name="id" value="11522" type="hidden">
+                                                </div>
+
+
+
+
+
+
+
+
+
+
+
+                                                <div class="field-group aui-field-wikiedit comment-input">
+                                                    <label for="comment">备注</label>
+
+
+
+                                                    <div class="jira-wikifield" field-id="comment" renderer-type="atlassian-wiki-renderer" issue-key="CYP-568" resolved="">
+                                                        <div class="wiki-edit">
+                                                            <div id="wiki-edit-dropdown2-text-style-wikiEdit1" class="aui-dropdown2 aui-style-default wiki-edit-dropdown aui-layer" resolved="" aria-hidden="true">
+                                                                <div class="aui-dropdown2-section">
+                                                                    <ul class="aui-list-truncate">
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="paragraph" original-title="段落">段落</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation wiki-edit-operation-h1" data-operation="h1" original-title="标题 1">标题 1</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation wiki-edit-operation-h2" data-operation="h2" original-title="标题 2">标题 2</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation wiki-edit-operation-h3" data-operation="h3" original-title="标题 3">标题 3</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation wiki-edit-operation-h4" data-operation="h4" original-title="标题 4">标题 4</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation wiki-edit-operation-h5" data-operation="h5" original-title="标题 5">标题 5</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation wiki-edit-operation-h6" data-operation="h6" original-title="标题 6">标题 6</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation wiki-edit-operation-monospace" data-operation="monospace" original-title="默认格式">默认格式</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="paragraph-quote" original-title="段落引用">段落引用</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="block-quote" original-title="块引用">块引用</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div id="wiki-edit-dropdown2-more-wikiEdit1" class="aui-dropdown2 aui-style-default wiki-edit-dropdown aui-layer" resolved="" aria-hidden="true">
+                                                                <div class="aui-dropdown2-section">
+                                                                    <ul class="aui-list-truncate">
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="delete" data-shortcut="ctrl+shift+s, command+shift+s" original-title="删除线 (Ctrl+Shift+S)">删除线</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="superscript">上标</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="subscript">下标</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="cite">引用</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div id="wiki-edit-dropdown2-link-wikiEdit1" class="aui-dropdown2 aui-style-default wiki-edit-dropdown wiki-edit-dropdown-link aui-layer" resolved="" aria-hidden="true">
+                                                                <div class="aui-dropdown2-section">
+                                                                    <ul class="aui-list-truncate">
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="link" data-shortcut="ctrl+k, command+k" original-title="外部链接 (Ctrl+K)">外部链接</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="link-mail">电邮链接</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="link-anchor">书签</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div id="wiki-edit-dropdown2-attachment-wikiEdit1" class="aui-dropdown2 aui-style-default wiki-edit-dropdown wiki-edit-dropdown-attachment aui-layer" resolved="" aria-hidden="true">
+                                                                <div class="aui-dropdown2-section wiki-edit-insert-attachment">
+                                                                    <ul class="aui-list-truncate">
+                                                                        <li>
+                                                                            <a href="#"></a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="aui-dropdown2-section wiki-edit-browse-image">
+                                                                    <ul class="aui-list-truncate">
+                                                                        <li>
+                                                                            <a href="#" class="wiki-attachment-browse">
+                                                                                <span class="aui-icon aui-icon-small aui-iconfont-add"></span>&nbsp;&nbsp;浏览</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div id="wiki-edit-color-picker-wikiEdit1" class="aui-dropdown2 aui-style-default wiki-edit-picker wiki-edit-color-picker aui-layer" resolved="" aria-hidden="true">
+                                                                <div class="aui-dropdown2-section">
+                                                                    <ul>
+                                                                        <li>
+                                                                            <a href="#" style="background-color: #333333" data-operation="color" data-color="#333333">&nbsp;</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" style="background-color: #707070" data-operation="color" data-color="#707070">&nbsp;</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" style="background-color: #cccccc" data-operation="color" data-color="#cccccc">&nbsp;</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" style="background-color: #205081" data-operation="color" data-color="#205081">&nbsp;</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" style="background-color: #59afe1" data-operation="color" data-color="#59afe1">&nbsp;</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" style="background-color: #14892c" data-operation="color" data-color="#14892c">&nbsp;</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" style="background-color: #8eb021" data-operation="color" data-color="#8eb021">&nbsp;</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" style="background-color: #d04437" data-operation="color" data-color="#d04437">&nbsp;</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" style="background-color: #f79232" data-operation="color" data-color="#f79232">&nbsp;</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" style="background-color: #f6c342" data-operation="color" data-color="#f6c342">&nbsp;</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" style="background-color: #654982" data-operation="color" data-color="#654982">&nbsp;</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" style="background-color: #f691b2" data-operation="color" data-color="#f691b2">&nbsp;</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div id="wiki-edit-dropdown2-icon-picker-wikiEdit1" class="aui-dropdown2 aui-style-default wiki-edit-picker wiki-edit-icon-picker aui-layer" resolved="" aria-hidden="true">
+                                                                <div class="aui-dropdown2-section">
+                                                                    <ul>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation=":)" original-title=":)">
+                                                                                <img src="/images/icons/emoticons/smile.gif" alt="微笑"></a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation=":(" original-title=":(">
+                                                                                <img src="/images/icons/emoticons/sad.gif" alt="伤心"></a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation=":P" original-title=":P">
+                                                                                <img src="/images/icons/emoticons/tongue.gif" alt="吐舌头"></a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation=":D" original-title=":D">
+                                                                                <img src="/images/icons/emoticons/biggrin.gif" alt="开心"></a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation=";)" original-title=";)">
+                                                                                <img src="/images/icons/emoticons/wink.gif" alt="眨眼"></a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="(y)" original-title="(y)">
+                                                                                <img src="/images/icons/emoticons/thumbs_up.gif" alt="赞"></a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="(n)" original-title="(n)">
+                                                                                <img src="/images/icons/emoticons/thumbs_down.gif" alt="贬"></a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="(i)" original-title="(i)">
+                                                                                <img src="/images/icons/emoticons/information.gif" alt="信息"></a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="(/)" original-title="(/)">
+                                                                                <img src="/images/icons/emoticons/check.gif" alt="打勾"></a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="(x)" original-title="(x)">
+                                                                                <img src="/images/icons/emoticons/error.gif" alt="错误"></a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="(!)" original-title="(!)">
+                                                                                <img src="/images/icons/emoticons/warning.gif" alt="警告"></a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="(+)" original-title="(+)">
+                                                                                <img src="/images/icons/emoticons/add.gif" alt="添加"></a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="(-)" original-title="(-)">
+                                                                                <img src="/images/icons/emoticons/forbidden.gif" alt="禁止"></a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="(?)" original-title="(?)">
+                                                                                <img src="/images/icons/emoticons/help_16.gif" alt="帮助"></a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="(on)" original-title="(on)">
+                                                                                <img src="/images/icons/emoticons/lightbulb_on.gif" alt="亮灯"></a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="(off)" original-title="(off)">
+                                                                                <img src="/images/icons/emoticons/lightbulb.gif" alt="灭灯"></a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="(*)" original-title="(*)">
+                                                                                <img src="/images/icons/emoticons/star_yellow.gif" alt="黄星"></a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="(*r)" original-title="(*r)">
+                                                                                <img src="/images/icons/emoticons/star_red.gif" alt="红星"></a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="(*g)" original-title="(*g)">
+                                                                                <img src="/images/icons/emoticons/star_green.gif" alt="绿星"></a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="(*b)" original-title="(*b)">
+                                                                                <img src="/images/icons/emoticons/star_blue.gif" alt="蓝星"></a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="(*y)" original-title="(*y)">
+                                                                                <img src="/images/icons/emoticons/star_yellow.gif" alt="黄星"></a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="(flag)" original-title="(flag)">
+                                                                                <img src="/images/icons/emoticons/flag.gif" alt="标记"></a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="wiki-edit-operation" data-operation="(flagoff)" original-title="(flagoff)">
+                                                                                <img src="/images/icons/emoticons/flag_grey.gif" alt="关闭标记"></a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div id="wiki-edit-dropdown2-other-wikiEdit1" class="aui-dropdown2 aui-style-default wiki-edit-dropdown aui-layer" resolved="" aria-hidden="true">
+                                                                <div class="aui-dropdown2-section">
+                                                                    <ul class="aui-list-truncate">
+                                                                        <div class="aui-dropdown2-section">
+                                                                            <li>
+                                                                                <a href="#" class="wiki-edit-operation" data-operation="mention">提及用户</a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="#" class="wiki-edit-operation" data-operation="table">表格</a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="#" class="wiki-edit-operation" data-operation="code">代码</a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="#" class="wiki-edit-operation" data-operation="noformat">默认格式</a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="#" class="wiki-edit-operation" data-operation="panel">文本框</a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="#" class="wiki-edit-operation" data-operation="hr">水平分割线</a>
+                                                                            </li>
+                                                                            <li class="wiki-edit-speech-item hidden">
+                                                                                <a href="#" class="wiki-edit-operation" data-operation="speech">语音识别</a>
+                                                                            </li>
+                                                                        </div>
+                                                                        <div class="aui-dropdown2-section">
+                                                                            <li>
+                                                                                <a href="/secure/WikiRendererHelpAction.jspa?section=texteffects" target="_blank" title="给我看看维基标记语法">文本帮助</a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="https://docs.atlassian.com/jira/jsw-docs-076/Visual+editing" target="_blank" title="Show me documentation for the visual editor">视觉帮助</a>
+                                                                            </li>
+                                                                        </div>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="wiki-edit-toolbar" id="wiki-edit-wikiEdit1">
+                                                                <div class="aui-toolbar2">
+                                                                    <div class="aui-toolbar2-inner">
+                                                                        <div class="aui-toolbar2-primary">
+                                                                            <div class="aui-buttons">
+                                                                                <a href="#" tabindex="-1" class="aui-button aui-button-subtle aui-dropdown2-trigger wiki-edit-operation-dropdown wiki-edit-style-picker-trigger" aria-owns="wiki-edit-dropdown2-text-style-wikiEdit1" aria-haspopup="true" aria-controls="wiki-edit-dropdown2-text-style-wikiEdit1" original-title="" resolved="" aria-expanded="false">样式</a>
+                                                                            </div>
+                                                                            <div class="aui-buttons wiki-edit-toolbar-section">
+                                                                                <a href="#" tabindex="-1" class="aui-button aui-button-subtle wiki-edit-operation" data-operation="bold" data-shortcut="ctrl+b, command+b" original-title="黑体 (Ctrl+B)">
+                                                                                    <span class="aui-icon aui-icon-small aui-iconfont-editor-bold">黑体</span>
+                                                                                </a>
+                                                                                <a href="#" tabindex="-1" class="aui-button aui-button-subtle wiki-edit-operation" data-operation="italic" data-shortcut="ctrl+i, command+i" original-title="斜体 (Ctrl+I)">
+                                                                                    <span class="aui-icon aui-icon-small aui-iconfont-editor-italic">斜体</span>
+                                                                                </a>
+                                                                                <a href="#" tabindex="-1" class="aui-button aui-button-subtle wiki-edit-operation" data-operation="underline" data-shortcut="ctrl+u, command+u" original-title="下划线 (Ctrl+U)">
+                                                                                    <span class="aui-icon aui-icon-small aui-iconfont-editor-underline">下划线</span>
+                                                                                </a>
+                                                                                <a href="#" tabindex="-1" class="aui-button aui-button-subtle wiki-edit-operation wiki-edit-operation-color" data-operation="color" data-color="red" original-title="文本颜色">
+                                                                                    <span class="aui-icon aui-icon-small aui-iconfont-editor-color">文本颜色</span>
+                                                                                    <span class="wiki-edit-color-indicator" style="background-color: red;"></span>
+                                                                                </a>
+                                                                                <a href="#" tabindex="-1" class="aui-button aui-button-subtle aui-dropdown2-trigger wiki-edit-operation-dropdown wiki-edit-color-picker-trigger" data-operation="color-parameter" aria-haspopup="true" original-title="更多颜色" resolved="" aria-controls="wiki-edit-color-picker-wikiEdit1" aria-expanded="false">
+                                                                                    <span>更多颜色</span>
+                                                                                </a>
+                                                                                <a href="#" tabindex="-1" class="aui-button aui-button-subtle aui-dropdown2-trigger wiki-edit-operation-dropdown wiki-edit-more-picker-trigger" aria-owns="wiki-edit-dropdown2-more-wikiEdit1" aria-haspopup="true" aria-controls="wiki-edit-dropdown2-more-wikiEdit1" original-title="更多" resolved="" aria-expanded="false">
+                                                                                    <span class="aui-icon aui-icon-small aui-iconfont-editor-styles">更多</span>
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="aui-buttons">
+                                                                                <a href="#" tabindex="-1" class="aui-button aui-button-subtle aui-dropdown2-trigger wiki-edit-operation-dropdown wiki-edit-link-picker-trigger" aria-owns="wiki-edit-dropdown2-link-wikiEdit1" aria-haspopup="true" aria-controls="wiki-edit-dropdown2-link-wikiEdit1" original-title="链接 (Ctrl+K)" resolved="" aria-expanded="false">
+                                                                                    <span class="aui-icon aui-icon-small aui-iconfont-link">链接</span>
+                                                                                </a>
+                                                                                <a href="#" tabindex="-1" class="aui-button aui-button-subtle aui-dropdown2-trigger wiki-edit-operation-dropdown wiki-edit-attachment-picker-trigger" aria-owns="wiki-edit-dropdown2-attachment-wikiEdit1" aria-haspopup="true" aria-controls="wiki-edit-dropdown2-attachment-wikiEdit1" original-title="附件" resolved="" aria-expanded="false">
+                                                                                    <span class="aui-icon aui-icon-small aui-iconfont-file-generic">附件</span>
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="aui-buttons wiki-edit-toolbar-section">
+                                                                                <a href="#" tabindex="-1" class="aui-button aui-button-subtle wiki-edit-operation" data-operation="bullet-list" data-shortcut="ctrl+shift+b, command+shift+b" original-title="编号列表 (Ctrl+Shift+B)">
+                                                                                    <span class="aui-icon aui-icon-small aui-iconfont-editor-list-bullet">编号列表</span>
+                                                                                </a>
+                                                                                <a href="#" tabindex="-1" class="aui-button aui-button-subtle wiki-edit-operation" data-operation="numbered-list" data-shortcut="ctrl+shift+n, command+shift+n" original-title="数字列表 (Ctrl+Shift+N)">
+                                                                                    <span class="aui-icon aui-icon-small aui-iconfont-editor-list-number">数字列表</span>
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="aui-buttons">
+                                                                                <a href="#" tabindex="-1" class="aui-button aui-button-subtle aui-dropdown2-trigger wiki-edit-operation-dropdown wiki-edit-icon-picker-trigger wiki-edit-tooltip" aria-owns="wiki-edit-dropdown2-icon-picker-wikiEdit1" aria-haspopup="true" aria-controls="wiki-edit-dropdown2-icon-picker-wikiEdit1" original-title="图标" resolved="" aria-expanded="false">
+                                                                                    <span class="aui-icon aui-icon-small aui-iconfont-editor-emoticon">图标</span>
+                                                                                </a>
+                                                                                <a href="#" tabindex="-1" class="aui-button aui-button-subtle aui-dropdown2-trigger wiki-edit-operation-dropdown wiki-edit-other-picker-trigger wiki-edit-tooltip" aria-owns="wiki-edit-dropdown2-other-wikiEdit1" aria-haspopup="true" aria-controls="wiki-edit-dropdown2-other-wikiEdit1" original-title="其他" resolved="" aria-expanded="false">
+                                                                                    <span class="aui-icon aui-icon-small aui-iconfont-add">其他</span>
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="aui-buttons wiki-edit-toolbar-last">
+                                                                                <a href="#" tabindex="-1" class="aui-button aui-button-subtle wiki-edit-visible-toggle wiki-edit-tooltip" original-title="Toggle可见性">
+                                                                                    <span class="aui-icon icon-toolbartoggle">Lock / Unlock</span>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- .aui-toolbar-inner -->
+                                                                </div>
+                                                            </div>
+                                                            <div id="comment-wiki-edit" class="wiki-edit-content">
+                                                                <textarea class="textarea long-field wiki-textfield mentionable wiki-editor-initialised" cols="60" id="comment" name="comment" rows="10" data-projectkey="CYP" data-issuekey="CYP-568" resolved="" wrap="virtual"></textarea>
+                                                                <div class="rte-container">
+                                                                    <rich-editor data-issue-key="CYP-568" data-content-present="true" resolved="" contenteditable="true"></rich-editor>
+                                                                </div>
+                                                                <div class="content-inner">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="field-tools">
+                                                            <dl id="wiki-prefs" class="wiki-js-prefs" style="display:none">
+                                                                <dt>trigger</dt>
+                                                                <dd>comment-preview_link</dd>
+                                                                <dt>fieldId</dt>
+                                                                <dd>comment</dd>
+                                                                <dt>fieldName</dt>
+                                                                <dd>备注</dd>
+                                                                <dt>rendererType</dt>
+                                                                <dd>atlassian-wiki-renderer</dd>
+                                                                <dt>issueKey</dt>
+                                                                <dd>CYP-568</dd>
+                                                            </dl>
+                                                            <button class="jira-icon-button fullscreen wiki-preview" id="comment-preview_link" type="button">
+                                                                <span class="aui-icon wiki-renderer-icon">预览 comment</span>
+                                                            </button>
+                                                            <a class="help-lnk" id="viewHelp" href="/secure/WikiRendererHelpAction.jspa?section=texteffects" title="获取维基标记帮助的本地帮助" data-helplink="local">
+                                                                <span class="aui-icon aui-icon-small aui-iconfont-help"></span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="save-options wiki-button-bar">
+                                                        <div class="security-level" resolved="">
+                                                            <fieldset class="hidden parameters">
+                                                                <input title="securityLevelViewableByAll" value="所有用户可见" type="hidden">
+                                                                <input title="securityLevelViewableRestrictedTo" value="限于 <span class=" redtext"="" type="hidden">{0}"&gt;
+                                                            </fieldset>
+
+                                                            <div class="select-menu" id="commentLevel-multi-select">
+                                                                <a class="drop" href="#">
+            <span class="security-level-drop-icon aui-icon aui-icon-small  aui-iconfont-unlocked">
+                该评论将所有用户可见
+            </span>
+                                                                    <span class="icon drop-menu"></span>
+                                                                </a>
+                                                                <div class="aui-list aui-list-checked" tabindex="-1" id="commentLevel-suggestions"></div>
+                                                            </div>
+                                                            <select name="commentLevel" id="commentLevel" data-enable-default="true" data-apply-default="true" style="display: none;" multiple="multiple">
+                                                                <option value="">所有用户</option>
+                                                                <optgroup label="项目角色">
+                                                                    <option value="role:10002">Administrators</option>
+                                                                    <option value="role:10102">dev</option>
+                                                                    <option value="role:10103">devManager</option>
+                                                                    <option value="role:10101">testManager</option>
+                                                                </optgroup>
+                                                            </select>
+                                                            <span class="current-level">所有用户可见</span>
+                                                            <span class="default-comment-level" data-project-id="10102"></span>
+                                                        </div>
+                                                        <span class="security-level-inline-error"></span>
+                                                        <input accesskey="S" class="aui-button aui-button-light" id="issue-comment-add-submit" name="Add" title="按 Alt+Shift+S 提交这个表单" value="添加" type="submit">
+                                                        <a accesskey="`" class="aui-button aui-button-link cancel" href="#" id="issue-comment-add-cancel" title="按 Alt+Shift+` 取消">取消</a>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="mod-footer">
+                                        <ul class="ops">
+                                            <li>
+                                                <a href="/secure/AddComment!default.jspa?id=11522" id="footer-comment-button" name="add-comment" class="aui-button">
+                                                    <span class="aui-icon aui-icon-small aui-iconfont-comment icon-comment"></span>
+                                                    <span>备注</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div id="viewissuesidebar" class="aui-item issue-side-column">
+                            <div id="peoplemodule" class="module toggle-wrap">
+                                <div id="peoplemodule_heading" class="mod-header">
+                                    <ul class="ops"></ul>
+                                    <h2 class="toggle-title">人员</h2>
+                                </div>
+                                <div class="mod-content">
+
+
+
+
+
+                                    <ul class="item-details" id="peopledetails">
+                                        <li class="people-details">
+
+                                            <dl>
+                                                <dt>经办人:</dt>
+                                                <dd>
+        <span id="assignee-val" class="view-issue-field editable-field inactive" title="点击开始编辑">
+
+            <span class="user-hover" id="issue_summary_assignee_xinhuan.yang" rel="xinhuan.yang" data-user="{&quot;avatarUrl&quot;:&quot;http://192.168.6.23:8080/secure/useravatar?size=xsmall&amp;avatarId=10341&quot;,&quot;displayName&quot;:&quot;信欢 杨&quot;,&quot;emailAddress&quot;:&quot;xinhuan.yang@cypfintech.com&quot;,&quot;username&quot;:&quot;xinhuan.yang&quot;}">
+
+
+    <span class="aui-avatar aui-avatar-small">
+<span class="aui-avatar-inner">
+<img src="http://192.168.6.23:8080/secure/useravatar?size=small&amp;avatarId=10341" alt="xinhuan.yang"></span>
+</span>
+            信欢 杨
+        </span>
+    <span class="overlay-icon aui-icon aui-icon-small aui-iconfont-edit"></span>
+</span>
+                                                    <span class="assign-to-me-link">
+                <a id="assign-to-me" class="issueaction-assign-to-me" href="/secure/AssignIssue.jspa?atl_token=BQCF-IXNC-TSBY-PTCZ|ae781fa5ca6355fd373ed5a36d06e4c85845df69|lin&amp;id=11522&amp;assignee=huajun.zhang" title="分配问题给我">分配给我</a>
+            </span>
+                                                </dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>报告人:</dt>
+                                                <dd>
+        <span id="reporter-val" class="view-issue-field editable-field inactive" title="点击开始编辑">
+
+            <span class="user-hover" id="issue_summary_reporter_xinhuan.yang" rel="xinhuan.yang" data-user="{&quot;avatarUrl&quot;:&quot;http://192.168.6.23:8080/secure/useravatar?size=xsmall&amp;avatarId=10341&quot;,&quot;displayName&quot;:&quot;信欢 杨&quot;,&quot;emailAddress&quot;:&quot;xinhuan.yang@cypfintech.com&quot;,&quot;username&quot;:&quot;xinhuan.yang&quot;}">
+
+
+    <span class="aui-avatar aui-avatar-small">
+<span class="aui-avatar-inner">
+<img src="http://192.168.6.23:8080/secure/useravatar?size=small&amp;avatarId=10341" alt="xinhuan.yang"></span>
+</span>
+            信欢 杨
+        </span>
+    <span class="overlay-icon aui-icon aui-icon-small aui-iconfont-edit"></span>
+</span>
+                                                </dd>
+                                            </dl>
+                                        </li>
+                                    </ul>
+                                    <ul class="item-details">
+                                        <li>
+                                            <dl>
+                                                <dt>表决:</dt>
+                                                <dd>
+                                                    <a id="view-voter-list" href="/secure/ViewVoters!default.jspa?id=11522" title="查看表决人">
+                                                        <span id="vote-data" class="aui-badge vote-state-off">0</span>
+                                                    </a>
+
+                                                    <a id="vote-toggle" class="vote-state-off" href="/secure/VoteOrWatchIssue.jspa?atl_token=BQCF-IXNC-TSBY-PTCZ|ae781fa5ca6355fd373ed5a36d06e4c85845df69|lin&amp;id=11522&amp;vote=vote" rel="11522">为这个问题表决</a>
+                                                    <span class="icon"></span>
+                                                </dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>管理关注列表:</dt>
+                                                <dd>
+
+                                                    <a id="view-watcher-list" href="/secure/ManageWatchers!default.jspa?id=11522" title="查看关注人" aria-controls="inline-dialog-watchers" aria-expanded="false" aria-haspopup="true" class="aui-alignment-target">
+                                                        <span id="watcher-data" class="aui-badge watch-state-off">1</span>
+                                                    </a>
+                                                    <aui-inline-dialog id="inline-dialog-watchers" alignment="right middle" persistent="true" class="aui-layer aui-alignment-element aui-alignment-side-right aui-alignment-snap-middle" resolved="" aria-hidden="true">
+                                                        <div class="aui-inline-dialog-contents"></div>
+                                                    </aui-inline-dialog>
+
+                                                    <a id="watching-toggle" class="watch-state-off" href="/secure/VoteOrWatchIssue.jspa?atl_token=BQCF-IXNC-TSBY-PTCZ|ae781fa5ca6355fd373ed5a36d06e4c85845df69|lin&amp;id=11522&amp;watch=watch" rel="11522">开始关注这个问题</a>
+                                                    <span class="icon"></span>
+                                                </dd>
+                                            </dl>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="datesmodule" class="module toggle-wrap">
+                                <div id="datesmodule_heading" class="mod-header">
+                                    <ul class="ops"></ul>
+                                    <h2 class="toggle-title">日期</h2>
+                                </div>
+                                <div class="mod-content">
+                                    <ul class="item-details">
+                                        <li>
+                                            <dl class="dates">
+                                                <dt>创建日期:</dt>
+                                                <dd class="date user-tz" title="21/&amp;#20108;&amp;#26376;/19 9:21 &amp;#19978;&amp;#21320;">
+                <span data-name="创建日期" id="created-val" data-fieldtype="datetime">
+                                                                                                        <time class="livestamp" datetime="2019-02-21T09:21:54+0800">21/二月/19 9:21 上午</time>
+                                                                                         </span>
+                                                </dd>
+                                            </dl>
+                                            <dl class="dates">
+                                                <dt>已更新:</dt>
+                                                <dd class="date user-tz" title="21/&amp;#20108;&amp;#26376;/19 9:23 &amp;#19978;&amp;#21320;">
+                <span data-name="已更新" id="updated-val" data-fieldtype="datetime">
+                                                                                                        <time class="livestamp" datetime="2019-02-21T09:23:24+0800">21/二月/19 9:23 上午</time>
+                                                                                         </span>
+                                                </dd>
+                                            </dl>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="hipchat-viewissue-panel" class="module toggle-wrap">
+                                <div id="hipchat-viewissue-panel_heading" class="mod-header">
+                                    <ul class="ops"></ul>
+                                    <h2 class="toggle-title">HipChat 讨论</h2>
+                                </div>
+                                <div class="mod-content">
+                                    <div id="hipchat-issue-panel-spinner"></div>
+                                    <div id="hipchat-issue-panel" class="hipchat-issue-panel">
+                                        <div class="hipchat-issue-panel" data-issue-key="CYP-568">
+                                            <div id="hipchat-issue-panel-rooms-container" data-project-key="CYP">
+                                                <p>您想在讨论这个问题吗？连接到HipChat。</p>
+                                                <p>
+                                                    <button id="hipchat-issue-panel-configure-button" class="aui-button" data-configure-url="/plugins/servlet/hipchat/configure?source=issue-panel">连接</button>
+                                                    <a id="hipchat-issue-panel-hide" href="#">不再提示</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="bamboo-deployment-projects-right" class="module toggle-wrap" style="display: none;">
+                                <div id="bamboo-deployment-projects-right_heading" class="mod-header">
+                                    <ul class="ops"></ul>
+                                    <h2 class="toggle-title">问题的部署</h2>
+                                </div>
+                                <div class="mod-content">
+                                    <div class="jbp-deployments-panel" data-fetch-url="/rest/bamboo/latest/deploy/CYP/CYP-568" data-oauth-dance-return-url="/browse/CYP-568" data-issue-id="11522" resolved=""></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span>
+<div class="attachments-drop-zone__dragover-border">
+<div class="attachments-drop-zone__dragover-info">
+<p>将文件拖放到此处以给问题添加附件</p>
+</div>
+</div>
+</span>
+        </div>
+
+
+
+    </section>
+    <footer id="footer" role="contentinfo">
+
+
+        <section class="footer-body">
+            <ul class="atlassian-footer">
+                <li>
+                    Atlassian JIRA <a class="seo-link" rel="nofollow" href="https://www.atlassian.com/software/jira">Project Management Software</a>
+                    <span id="footer-build-information">(v7.6.3#76005-<span title="8a4e38d34af948780dbf52044e7aafb13a7cae58" data-commit-id="8a4e38d34af948780dbf52044e7aafb13a7cae58}">sha1:8a4e38d</span>)</span>
+                </li>
+                <li>
+                    <a id="about-link" rel="nofollow" href="/secure/AboutPage.jspa/secure/AboutPage.jspa">About JIRA</a>
+                </li>
+                <li>
+                    <a id="footer-report-problem-link" rel="nofollow" href="/plugins/servlet/troubleshooting/view/">Report a problem</a>
+                </li>
+            </ul>
+            <ul class="atlassian-footer">
+                <li class="licensemessage">
+
+                </li>
+            </ul>
+
+            <div id="footer-logo">
+                <a rel="nofollow" href="http://www.atlassian.com/">Atlassian</a>
+            </div>
+        </section>
+
+
+
+
+
+
+
+
+
+
+
+        <fieldset class="hidden parameters">
+            <input title="loggedInUser" value="huajun.zhang" type="hidden">
+            <input title="ajaxTimeout" value="呼叫服务器的 JIRA 没有完成在超时时间段内。我们不能确定这项行动的结果。" type="hidden">
+            <input title="JiraVersion" value="7.6.3" type="hidden">
+            <input title="ajaxUnauthorised" value="您无权执行此操作。请先登录。" type="hidden">
+            <input title="baseURL" value="http://192.168.6.23:8080" type="hidden">
+            <input title="ajaxCommsError" value="JIRA 服务器无法联系。这可能是一个临时故障或服务器可能已关闭。 " type="hidden">
+            <input title="ajaxServerError" value="JIRA 服务器进行了联系但返回错误响应。我们不能确定这项行动的结果。" type="hidden">
+            <input title="ajaxErrorCloseDialog" value="关闭这个对话框并重新刷新浏览器" type="hidden">
+            <input title="ajaxErrorDialogHeading" value="通讯中断" type="hidden">
+
+            <input title="dirtyMessage" value="您已输入新的数据在该页面上。如果您离开此页面而不首先保存您的数据所作的更改将会丢失。" type="hidden">
+            <input title="dirtyDialogMessage" value="您已输入新的数据在这个对话框中。如果您离开此对话框而不首先保存您的数据所作的更改将会丢失。单击 “取消” 以返回到对话框中。" type="hidden">
+            <input title="keyType" value="类型" type="hidden">
+            <input title="keyThen" value="然后" type="hidden">
+            <input title="dblClickToExpand" value="双击展开" type="hidden">
+            <input title="actions" value="操作" type="hidden">
+            <input title="removeItem" value="移除" type="hidden">
+            <input title="workflow" value="工作流" type="hidden">
+            <input title="labelNew" value="新标签" type="hidden">
+            <input title="issueActionsHint" value="输入内容查看可用的操作" type="hidden">
+            <input title="closelink" value="关闭" type="hidden">
+            <input title="dotOperations" value="操作" type="hidden">
+            <input title="dotLoading" value="正装载……" type="hidden">
+            <input title="frotherSuggestions" value="建议" type="hidden">
+            <input title="frotherNomatches" value="没有匹配的" type="hidden">
+            <input title="multiselectVersionsError" value="{0} 不是一个有效的版本。" type="hidden">
+            <input title="multiselectComponentsError" value="{0} 不是一个有效的组件。" type="hidden">
+            <input title="multiselectGenericError" value="数值 {0}无效。" type="hidden">
+        </fieldset>
+
+    </footer>
+</div>
+
+
+<script type="text/javascript" src="/s/d41d8cd98f00b204e9800998ecf8427e-CDN/h8qsp4/76005/b6b48b2829824b869586ac216d119363/1.0/_/download/batch/jira.webresources:bigpipe-js/jira.webresources:bigpipe-js.js" data-wrm-key="jira.webresources:bigpipe-js" data-wrm-batch-type="resource" data-initially-rendered=""></script>
+<script type="text/javascript" src="/s/d41d8cd98f00b204e9800998ecf8427e-CDN/h8qsp4/76005/b6b48b2829824b869586ac216d119363/1.0/_/download/batch/jira.webresources:bigpipe-init/jira.webresources:bigpipe-init.js" data-wrm-key="jira.webresources:bigpipe-init" data-wrm-batch-type="resource" data-initially-rendered=""></script>
+
+<form id="jira_request_timing_info" class="dont-default-focus">
+    <fieldset class="parameters hidden">
+        <input title="jira.request.start.millis" value="1552370346713" type="hidden">
+        <input title="jira.request.server.time" value="178" type="hidden">
+        <input title="jira.request.id" value="839x148338x1" type="hidden">
+        <input title="jira.session.expiry.time" value="1552388346650" type="hidden">
+        <input title="jira.session.expiry.in.mins" value="299" type="hidden">
+        <input id="jiraConcurrentRequests" name="jira.request.concurrent.requests" value="1" type="hidden">
+        <input title="issue.index.reads.time.in.ms" value="0" type="hidden">
+        <input title="db.reads.time.in.ms" value="17" type="hidden">
+        <input title="db.conns.time.in.ms" value="85" type="hidden">
+    </fieldset>
+</form>
+<!--
+	                 REQUEST ID : 839x148338x1
+	          REQUEST TIMESTAMP : [12/Mar/2019:13:59:06 +0800]
+	               REQUEST TIME : 0.1780
+	                 ASESSIONID : 124mzrf
+	        CONCURRENT REQUESTS : 1
+
+	             issue.index.reads : OpSnapshot{name='issue.index.reads', invocationCount=1, elapsedTotal=349184, elapsedMin=349184, elapsedMax=349184, resultSetSize=0, cpuTotal=0, cpuMin=0, cpuMax=0}
+	                      db.reads : OpSnapshot{name='db.reads', invocationCount=30, elapsedTotal=17024838, elapsedMin=83382, elapsedMax=9126008, resultSetSize=0, cpuTotal=0, cpuMin=0, cpuMax=0}
+	                      db.conns : OpSnapshot{name='db.conns', invocationCount=48, elapsedTotal=85292951, elapsedMin=96725, elapsedMax=16627188, resultSetSize=0, cpuTotal=0, cpuMin=0, cpuMax=0}
+-->
+
+
+
+<div id="fancybox-tmp"></div>
+<div id="fancybox-loading">
+    <div></div>
+</div>
+<div id="fancybox-overlay"></div>
+<div id="fancybox-wrap">
+    <div id="fancybox-outer">
+        <div class="fancybox-bg" id="fancybox-bg-n"></div>
+        <div class="fancybox-bg" id="fancybox-bg-ne"></div>
+        <div class="fancybox-bg" id="fancybox-bg-e"></div>
+        <div class="fancybox-bg" id="fancybox-bg-se"></div>
+        <div class="fancybox-bg" id="fancybox-bg-s"></div>
+        <div class="fancybox-bg" id="fancybox-bg-sw"></div>
+        <div class="fancybox-bg" id="fancybox-bg-w"></div>
+        <div class="fancybox-bg" id="fancybox-bg-nw"></div>
+        <div id="fancybox-content"></div>
+        <a id="fancybox-close"></a>
+        <div id="fancybox-title"></div>
+        <a href="javascript:;" id="fancybox-left">
+            <span class="fancy-ico" id="fancybox-left-ico"></span>
+        </a>
+        <a href="javascript:;" id="fancybox-right">
+            <span class="fancy-ico" id="fancybox-right-ico"></span>
+        </a>
+    </div>
+</div>
+<span>
+<div class="attachments-drop-zone__window-dragover-mask"></div>
+</span>
+</body>
+</html>

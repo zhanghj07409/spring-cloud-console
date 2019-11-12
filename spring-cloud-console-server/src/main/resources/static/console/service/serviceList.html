@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+
+    <meta charset="utf-8">
+    <title>服务列表- SCCS</title>
+
+
+    <link type="text/css" rel="stylesheet" href="../common/css/batch.css" data-wrm-key="_super"
+          data-wrm-batch-type="context" media="all">
+    <script type="text/javascript" src="../common/js/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript" src="../common/js/adapter.js"></script>
+    <link rel="stylesheet" href="../common/css/bootstrap.css">
+    <link rel="stylesheet" href="../common/js/layui/css/layui.css"/>
+    <script src="../common/js/layui/layui.all.js"></script>
+    <link rel="stylesheet" href="../common/css/bootstrap-switch.min.css"/>
+    <script src="../common/js/bootstrap-switch.min.js"></script>
+    <style>
+        pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
+        .string { color: #5cb85c; }
+        .number { color: darkorange; }
+        .boolean { color: blue; }
+        .null { color: magenta; }
+        .key { color: #337ab7; }
+        .statusFail { color: #d43f3a; }
+        .my-form-group{
+            padding-top: 5px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+    </style>
+</head>
+
+
+<body id="jira" class="aui-layout aui-theme-default page-type-admin  aui-page-sidebar" data-version="7.6.3"
+      data-aui-version="6.1.0">
+<div id="page">
+    <header id="header" role="banner">
+        <nav class="aui-header aui-dropdown2-trigger-group" role="navigation" resolved="" data-aui-responsive="true">
+            <div class="aui-header-inner">
+                <div class="aui-header-primary"><h1 id="logo" class="aui-header-logo aui-header-logo-custom"><a
+                        href=""><img
+                        src="" alt="SccS"
+                        data-aui-responsive-header-index="0"></a></h1>
+                    <ul class="aui-nav" style="width: auto;" resolved="">
+
+                        <li><a href="/console/service/serviceList.html" class=" aui-nav-link"
+                               id="browse_link" aria-haspopup="true" aria-controls="browse_link-content"
+                               title="应用列表" resolved="" aria-expanded="false">应用</a>
+
+                        </li>
+                        <li><a href="/console/plugin/pluginsList.html" class=" aui-nav-link"
+                               id="find_link" aria-haspopup="true" aria-controls="find_link-content"
+                               title="插件服务列表" resolved="" aria-expanded="false">插件</a>
+                        </li>
+                        <li><a href="/console/job/jobList.html" class=" aui-nav-link"
+                               id="find_link" aria-haspopup="true" aria-controls="find_link-content"
+                               title="服务监控" resolved="" aria-expanded="false">监控</a>
+                        </li>
+                        <li><a href="/zipkin" class=" aui-nav-link"
+                               id="find_link" aria-haspopup="true" aria-controls="find_link-content"
+                               title="微服务链路跟踪" resolved="" aria-expanded="false">Zipkin</a>
+                        </li>
+                        <li><a href="#"
+                               class=" aui-nav-link" id="greenhopper_menu"
+                               aria-haspopup="true" aria-controls="greenhopper_menu-content"
+                               title="项目脚本打包" resolved="" aria-expanded="false">脚本打包</a>
+                        </li>
+                        <li><a href="#"
+                               class=" aui-nav-link" id="greenhopper_menu"
+                               aria-haspopup="true" aria-controls="greenhopper_menu-content"
+                               title="项目编译程序部署" resolved="" aria-expanded="false">项目部署</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="aui-header-secondary">
+                    <ul class="aui-nav" resolved="">
+                        <li id="system-help-menu">
+                            <a class="aui-nav-link" id="help_menu" aria-haspopup="true"
+                               href="#" resolved=""
+                               aria-controls="system-help-menu-content" aria-expanded="false">登录用户：admin &nbsp;&nbsp;&nbsp;</a>
+                        </li>
+                        <li id="system-logout-menu">
+                            <a class="aui-nav-link" id="logout_menu" aria-haspopup="true"
+                               href="/login/logout" title="退出" resolved=""
+                               aria-controls="system-help-menu-content" aria-expanded="false">退出</a>
+                        </li>
+                    </ul>
+                </div>
+            </div><!-- .aui-header-inner--></nav><!-- .aui-header -->
+    </header>
+
+
+    <section id="content" role="main">
+        <!-- sidebarContentHtml -->
+        <div class="aui-sidebar projects-sidebar fade-in" resolved="">
+            <div class="aui-sidebar-wrapper" style="height: 905px;">
+                <div class="aui-sidebar-body">
+                    <header class="aui-page-header">
+                        <div class="aui-page-header-inner">
+
+                            <div class="aui-page-header-main">
+                                <h1>
+                                    <div class="aui-group aui-group-split">
+                                        <div class="aui-item project-title"><a href="/projects/SCYP/summary"
+                                                                               title="服务列表">服务列表</a>
+                                        </div>
+                                    </div>
+                                </h1>
+                            </div><!-- .aui-page-header-main -->
+                        </div><!-- .aui-page-header-inner -->
+                    </header><!-- .aui-page-header -->
+
+                    <nav class="aui-navgroup aui-navgroup-vertical">
+                        <div class="aui-navgroup-inner">
+                            <div class="aui-navgroup-primary">
+                                <div id="list-plugins" class="admin-menu-links">
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </nav><!-- .aui-page-panel-nav -->
+
+                </div>
+
+            </div>
+        </div>
+        <!-- /sidebarContentHtml -->
+
+
+        <header class="aui-page-header">
+            <div class="aui-page-header-inner">
+                <header class="aui-page-header" id="project-config-header">
+                    <div class="aui-page-header-inner">
+                        <div class="aui-page-header-main"><h1 id="project-config-header-name">服务信息</h1>
+                        </div>
+                        <!-- .aui-page-header-main -->
+                    </div><!-- .aui-page-header-inner -->
+                </header><!-- .aui-page-header -->
+            </div><!-- .aui-page-header-inner -->
+        </header><!-- .aui-page-header -->
+
+
+        <div class="aui-page-panel">
+            <div class="aui-page-panel-inner">
+
+
+                <div class="aui-page-panel-nav">
+                    <nav class="aui-navgroup aui-navgroup-vertical">
+                        <div class="aui-navgroup-inner">
+                            <div class="aui-navgroup-primary">
+                                <div id="list-plugins-children" class="admin-menu-links">
+
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div><!-- .aui-page-panel-nav -->
+
+                <section class="aui-page-panel-content">
+
+                    <div class="issue-navigator">
+                        <div class="content">
+                            <div class="issue-view" style="height: 895px;">
+                                <div class="navigation-tools"></div>
+                                <div class="issue-container" style="position: relative;">
+                                    <div id="issue-content" class="issue-edit-form">
+                                        <header id="stalker" class="issue-header js-stalker">
+                                            <div class="issue-header-content">
+
+                                                <div class="command-bar">
+                                                    <div class="ops-cont">
+                                                        <div class="ops-menus aui-toolbar">
+                                                            <div class="toolbar-split toolbar-split-left">
+                                                                <ul id="opsbar-opsbar-transitions"
+                                                                    class="toolbar-group pluggable-ops">
+                                                                    <li class="toolbar-item"><a id="action_id_201"
+                                                                                                class="toolbar-trigger issueaction-workflow-transition"
+                                                                                                href="javascript:void(0)" onclick="showloggerTable()"><span
+                                                                            class="trigger-label">日志级别修改</span></a></li>
+                                                                    <li class="toolbar-item"><a id="action_id_211"
+                                                                                                class="toolbar-trigger issueaction-workflow-transition"
+                                                                                                href="javascript:void(0)" onclick="showChangePropertiesView()"><span
+                                                                            class="trigger-label">配置修改</span></a></li>
+                                                                    <li class="toolbar-item"><a id="DB_id_211"
+                                                                                                class="toolbar-trigger issueaction-workflow-transition"
+                                                                                                href="javascript:void(0)" onclick="showDruidView()"><span
+                                                                            class="trigger-label">数据源监控</span></a></li>
+                                                                    <li class="toolbar-item"><a id="email_notify"
+                                                                                                class="toolbar-trigger issueaction-workflow-transition"
+                                                                                                href="javascript:void(0)"><span
+                                                                            class="trigger-label">邮件提醒</span></a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </header>
+                                        <div class="issue-body-content">
+                                            <div class="aui-group issue-body">
+                                                <div class="aui-item issue-main-column">
+                                                    <div id="details-module" class="module toggle-wrap">
+                                                        <div id="details-module_heading" class="mod-header">
+                                                            <ul class="ops"></ul>
+                                                            <h2 class="toggle-title">详情</h2></div>
+                                                        <div class="mod-content">
+
+
+                                                            <ul id="issuedetails" class="property-list two-cols">
+
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="health-module" class="module toggle-wrap">
+                                                        <div id="health-module_heading" class="mod-header">
+                                                            <ul class="ops"></ul>
+                                                            <h2 class="toggle-title">健康状态</h2></div>
+                                                        <div class="mod-content">
+
+
+                                                            <ul id="healthdetails_ul" class="property-list two-cols">
+                                                                <pre id="healthdetails"></pre>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div id="property-module" class="module toggle-wrap">
+                                                        <div id="property-module_heading" class="mod-header">
+                                                            <ul class="ops"></ul>
+                                                            <h2 class="toggle-title">配置信息</h2></div>
+                                                        <div class="mod-content">
+
+
+                                                            <ul id="propertydetails_ul" class="property-list two-cols">
+                                                                <pre id="propertydetails"></pre>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </section><!-- .aui-page-panel-content -->
+            </div><!-- .aui-page-panel-inner --></div><!-- .aui-page-panel -->
+
+    </section>
+
+
+    <footer id="footer" role="contentinfo">
+        <section class="footer-body">
+            <ul class="atlassian-footer">
+                <li>
+                    SCCS <a class="seo-link" rel="nofollow" href="#">Spring Cloud Console Server</a>
+                </li>
+                <li>
+                    <a id="about-link" rel="nofollow" href="#">关于我们</a>
+                </li>
+                <li>
+                    <a id="footer-report-problem-link" rel="nofollow"
+                       href="#">问题反馈</a>
+                </li>
+            </ul>
+            <ul class="atlassian-footer">
+                <li class="licensemessage">
+
+                </li>
+            </ul>
+
+        </section>
+    </footer>
+
+</div>
+
+
+<script>
+    var instanceId=null;
+    var homepage=null;
+    $(function () {
+        $.ajax({
+            url: '/service/getAppNameList',
+            type: 'get',
+            dataType: 'json',
+            cache: false,
+            data: {},
+            success: function (data) {
+                var rows = data;
+                var appendStr = "";
+                var isFirstIndex=0;
+                for(var key in rows){//遍历json数组时，这么写p为索引，0,1
+
+                    appendStr = appendStr +
+                        '<ul class="aui-nav" resolved="">' +
+                        '<li><a onclick="showServiceList(this)" id="' + key + '" title="' + key + '">' + key + '<span class="label label-primary pull-right">' + rows[key] + '</span></a></li>' +
+                        '</ul>';
+                    if (isFirstIndex == 0) {
+                        getServiceList(key);
+                    }
+                    isFirstIndex++;
+                }
+                $('#list-plugins').html(appendStr);
+            },
+            error: function (data) {
+                layer.msg("操作失败:"+data);
+            }
+        });
+    })
+
+
+    var showServiceList = function (entity) {
+        var appName = $(entity).attr("title");
+        getServiceList(appName);
+    }
+    var getServiceList = function (appName) {
+        $.ajax({
+            url: '/service/getServiceList',
+            type: 'post',
+            dataType: 'json',
+            data: {appName: appName},
+            success: function (data) {
+                var rows = data.rows;
+                var appendStr = "";
+
+                for (var item in data) {
+                    var rows = data[item];
+                    for (var i = 0; i < rows.length; i++) {
+                        appendStr = appendStr + '<ul class="aui-nav" id="project_issuetypes" resolved="">';
+                        appendStr = appendStr + '<li id="project-issuetypes-summary"><a onclick="showServiceInfo(this)" class="project-issuetype"  serviceId="' + rows[i].instanceId + '" title="' + rows[i].instanceId + '">' + rows[i].instanceId;
+                        if (rows[i].status == 'UP') {
+                            appendStr = appendStr + '<span class="label label-success">' + rows[i].status + '</span>'
+                        } else if (rows[i].status == 'DOWN') {
+                            appendStr = appendStr + '<span class="label label-danger">' + rows[i].status + '</span>'
+                        } else if (rows[i].status == 'OUT_OF_SERVICE') {
+                            appendStr = appendStr + '<span class="label label-warning">' + rows[i].status + '</span>'
+                        } else if (rows[i].status == 'UNKNOWN') {
+                            appendStr = appendStr + '<span class="label label-default">' + rows[i].status + '</span>'
+                        }
+                        appendStr = appendStr + '</a></li></ul>';
+                        if (i == 0) {
+                            instanceId=rows[i].instanceId;
+                            serviceInfoInit();
+                        }
+                    }
+                }
+                $('#list-plugins-children').html(appendStr);
+            },
+            error: function (data) {
+                layer.msg("操作失败:"+data);
+            }
+        });
+    }
+    var showServiceInfo = function (entity) {
+        instanceId= $(entity).attr("serviceId");
+        serviceInfoInit();
+    }
+    var serviceInfoInit = function () {
+        $('#issuedetails').html("");
+        $('#healthdetails').html("");
+        $('#propertydetails').html("");
+        getServiecInfo();
+        getProperties();
+        homepage="";
+    }
+    var getServiecInfo=function(){
+        $.ajax({
+            url: '/service/getServiceInfo',
+            type: 'post',
+            dataType: 'json',
+            data: {serviceId: instanceId},
+            success: function (data) {
+                var serviceInfo=data.instanceInfo;
+                homepage=serviceInfo.homePageUrl;
+                var appendStr = '<li class="item">\n' +
+                    '<div class="wrap"><strong class="name">服务名:</strong>\n' +
+                    '<span id="resolution-val" class="value unresolved">\n' +serviceInfo.appName + '</span>' +
+                    '</div>' +
+                    '</li>'+
+                    '<li class="item item-right">\n' +
+                    '<div class="wrap"><strong class="name">服务id:</strong>\n' +
+                    '<span id="resolution-val" class="value unresolved">\n' +serviceInfo.instanceId + '</span>' +
+                    '</div>' +
+                    '</li>'+
+                    '<li class="item item">\n' +
+                    '<div class="wrap"><strong class="name">服务注册时间:</strong>\n' +
+                    '<span id="resolution-val" class="value unresolved">\n' +new Date(serviceInfo.leaseInfo.registrationTimestamp) + '</span>' +
+                    '</div>' +
+                    '</li>'+
+                    '<li class="item item-right">\n' +
+                    '<div class="wrap"><strong class="name">服务最后更新时间:</strong>\n' +
+                    '<span id="resolution-val" class="value unresolved">\n' +new Date(serviceInfo.leaseInfo.lastRenewalTimestamp) + '</span>' +
+                    '</div>' +
+                    '</li>'+
+                    '<li class="item item">\n' +
+                    '<div class="wrap"><strong class="name">续租间隔(秒):</strong>\n' +
+                    '<span id="resolution-val" class="value unresolved">\n' +serviceInfo.leaseInfo.renewalIntervalInSecs + '</span>' +
+                    '</div>' +
+                    '</li>'+
+                    '<li class="item item-right">\n' +
+                    '<div class="wrap"><strong class="name">续约过期(秒):</strong>\n' +
+                    '<span id="resolution-val" class="value unresolved">\n' +serviceInfo.leaseInfo.durationInSecs + '</span>' +
+                    '</div>' +
+                    '</li>'+
+                    '<li class="item ">\n' +
+                    '<div class="wrap"><strong class="name">状态:</strong>\n' ;
+                if (serviceInfo.status == 'UP') {
+                    appendStr = appendStr + '<span class="label label-success">' + serviceInfo.status + '</span>'
+                } else if (serviceInfo.status == 'DOWN') {
+                    appendStr = appendStr + '<span class="label label-danger">' + serviceInfo.status + '</span>'
+                } else if (serviceInfo.status == 'OUT_OF_SERVICE') {
+                    appendStr = appendStr + '<span class="label label-warning">' + serviceInfo.status + '</span>'
+                } else if (serviceInfo.status == 'UNKNOWN') {
+                    appendStr = appendStr + '<span class="label label-default">' + serviceInfo.status + '</span>'
+                }
+                appendStr = appendStr + '</div>' +
+                    '</li>'+
+                    '<li class="item item-right">\n' +
+                    '<div class="wrap"><strong class="name">限流:</strong>\n' ;
+                if (serviceInfo.status == 'UP') {
+                    appendStr = appendStr + '<input type="checkbox" data-off-color="danger" switchBtn />'
+                } else if (serviceInfo.status == 'DOWN') {
+                    appendStr = appendStr + '<input type="checkbox" data-off-color="danger" checked="checked" switchBtn  disabled/>';
+                } else if (serviceInfo.status == 'OUT_OF_SERVICE') {
+                    appendStr = appendStr + '<input type="checkbox" data-off-color="danger" checked="checked" switchBtn />';
+                } else if (serviceInfo.status == 'UNKNOWN') {
+                    appendStr = appendStr + '<input type="checkbox" data-off-color="danger" checked="checked" switchBtn  disabled/>';
+                }
+                appendStr = appendStr + '</div>' +
+                    '</li>';
+                $('#issuedetails').html(appendStr);
+                $('input[switchBtn]')
+                    .not('[data-switch-no-init]')
+                    .bootstrapSwitch();
+                $('input[switchBtn]').on('switchChange.bootstrapSwitch', function(event, state) {
+                    stateChange(state);
+                });
+                var health=data.healthInfo;
+                if(health!=null||health!= undefined){
+                    $('#healthdetails').html(syntaxHighlight(health));
+                }else{
+                    health ={ msg:"null"}
+                    $('#healthdetails').html(syntaxHighlight(health));
+                }
+            },
+            error: function (data) {
+                layer.msg("操作失败:"+data);
+            }
+        });
+    }
+    function stateChange(param){
+        var status="UP";
+        if(param){
+            status="OUT_OF_SERVICE";
+        }
+        $.ajax({
+            url: '/service/updateStatus',
+            type: 'post',
+            dataType: 'json',
+            data: {serviceId: instanceId,status:status},
+            success: function (data) {
+                console.log(data);
+                serviceInfoInit();
+            },
+            error:function (data) {
+                console.log(data);
+                serviceInfoInit();
+            }
+        });
+    }
+    function getProperties(){
+        $.ajax({
+            url: '/properConfig/getProperties',
+            type: 'post',
+            dataType: 'json',
+            data: {serviceId: instanceId},
+            success: function (data) {
+                var propertiesInfo=data;
+                $('#propertydetails').html(syntaxHighlight(data));
+            },
+            error:function (data) {
+                layer.msg("操作失败:"+data);
+            }
+        });
+    }
+    function showChangePropertiesView(key,value){
+        layer.open({
+            type: 1,
+            area: ['600px', '280px'],
+            title:"修改配置",
+            shadeClose: true, //点击遮罩关闭
+            content: '<div class="form-group my-form-group">\n' +
+                    '    <label for="exampleInputEmail1">配置名</label>\n' +
+                    '    <input type="text" class="form-control" id="propertyKey" placeholder="property">\n' +
+                    '  </div>\n' +
+                    '  <div class="form-group my-form-group">\n' +
+                    '    <label for="exampleInputPassword1">value</label>\n' +
+                    '    <input type="text" class="form-control" id="propertyValue" placeholder="value">\n' +
+                    '  </div>',
+            btn: ['修改', '取消']
+            ,btn1: function(index, layero){
+                var key=$("#propertyKey").val();
+                var value=$("#propertyValue").val();
+                console.log(key);
+                console.log(value);
+                if(key==null||key==""){
+                    layer.msg('配置名不能为空');
+                }
+                return changeProperties(key,value,index);
+            },btn2: function(index, layero){
+                layer.close(index);
+                return false;
+            }
+        });
+    }
+    function changeProperties(key,value,index){
+        $.ajax({
+            url: '/properConfig/updateProperties',
+            type: 'post',
+            data: {serviceId: instanceId,key:key,value:value},
+            success: function (data) {
+                var propertiesInfo=data;
+                layer.msg("操作成功:"+data);
+                layer.close(index);
+            },
+            error:function (data) {
+                layer.msg("操作失败:"+data);
+            }
+        });
+    }
+    function syntaxHighlight(json) {
+        if (typeof json != 'string') {
+            json = JSON.stringify(json, undefined, 2);
+        }
+        json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
+        return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+            var cls = 'number';
+            if (/^"/.test(match)) {
+                if (/:$/.test(match)) {
+                    cls = 'key';
+                } else {
+                    cls = 'string';
+                }
+            } else if (/true|false/.test(match)) {
+                cls = 'boolean';
+            } else if (/null/.test(match)) {
+                cls = 'null';
+            }
+            if (match.toUpperCase() == '"DOWN"'||match.toUpperCase()== '"OUT_OF_SERVICE"'||match.toUpperCase() == '"UNKNOWN"'||match.toUpperCase() == '"FALSE"') {
+                cls ='statusFail';
+            }
+            return '<span class="' + cls + '">' + match + '</span>';
+        });
+    }
+    var showloggerTable=function(){
+        layer.open({
+            area: ['1200px', '560px'],
+            type: 2,
+            title:"日志级别",
+            content: './loggerInfo.html?serviceId='+instanceId //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+        });
+    }
+    var showDruidView=function(){
+        layer.open({
+            type: 2,
+            title: '数据源监控,注意同时只能查看一个数据源信息',
+            shadeClose: true,
+            shade: false,
+            maxmin: true, //开启最大化最小化按钮
+            area: ['1280px', '768px'],
+            content: '/druidview/proxy?url='+homepage,
+        });
+    }
+</script>
+</body>
+</html>

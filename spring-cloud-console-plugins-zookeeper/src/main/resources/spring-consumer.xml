@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="org.cloud.console.plugins.zookeeper.listener" />
+
+    <bean id="kafkaConsumerProperites" class="java.util.HashMap">
+        <constructor-arg>
+            <map>
+                <entry key="bootstrap.servers" value="127.0.0.1:9092" />
+                <entry key="group.id" value="test"/>
+                <entry key="enable.auto.commit" value="true"/>
+                <entry key="auto.commit.interval.ms" value="1000"/>
+                <entry key="session.timeout.ms" value="30000"/>
+                <entry key="key.deserializer" value="org.apache.kafka.common.serialization.StringDeserializer" />
+                <entry key="value.deserializer" value="org.apache.kafka.common.serialization.StringDeserializer" />
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <bean id="kafkaConsumerFactory" class="org.springframework.kafka.core.DefaultKafkaConsumerFactory">
+        <constructor-arg ref="kafkaConsumerProperites"/>
+    </bean>
+
+    <bean id="consumerContainerProperties" class="org.springframework.kafka.listener.config.ContainerProperties">
+        <constructor-arg value="TASK_ADD"/>
+        <property name="messageListener" ref="kafkaConsumerListener" />
+    </bean>
+
+    <bean id="conusmerContainer" class="org.springframework.kafka.listener.KafkaMessageListenerContainer">
+        <constructor-arg ref="kafkaConsumerFactory"/>
+        <constructor-arg ref="consumerContainerProperties"/>
+    </bean>
+</beans>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../common/css/bootstrap.css">
+    <script type="text/javascript" src="../common/js/jquery-2.2.0.min.js"></script>
+
+    <script src="../common/js/bootstrap.min.js"></script>
+    <script src="../common/js/jquery.validate.min.js"></script>
+    <script src="../common/js/messages_zh.min.js"></script>
+    <link rel="stylesheet" href="../common/js/layui/css/layui.css"/>
+    <script src="../common/js/layui/layui.all.js"></script>
+    <style>
+        body{
+            background-color: #ddd;
+        }
+        .time{
+            color: #5cb85c;
+        }
+        .result{
+            color: #337ab7;
+        }
+        .failResult{
+            color: #d43f3a;
+        }
+    </style>
+</head>
+<body>
+<div id="result"></div>
+<script>
+    var websocket=null;
+    $(function(){
+        //创建的websocket连接路径，
+        var protocolStr = document.location.protocol;
+        var wsUri;
+        /*if(protocolStr == "http:"){
+            wsUri='ws://'+window.location.hostname;
+        }else if(protocolStr == "https:"){
+            wsUri='wss://'+window.location.hostname;
+        }
+        wsUri=wsUri+'/webSocket?type=jobDetail&jobName='+getUrlParam("jobName");*/
+        wsUri='ws://localhost:9080/webSocket?type=jobDetail&jobName='+getUrlParam("jobName");
+        var jobType=getUrlParam("jobType");
+        websocket= new WebSocket(wsUri);
+        //建立连接时触发
+        websocket.onopen=function(evt){//接收到的数据
+            console.log("open");
+        };
+        //接收到后台数据时触发
+        websocket.onmessage=function(evt){
+            var htmlData="";
+            var data=evt.data;
+            data=eval('(' + data + ')');
+            $("#result").append("<p class='time'>"+data.date.replace("T"," ")+":</p>");
+            if(!data.success){
+                $("#result").append("<p class='failResult'>"+data.msg+"</p>");
+
+            }else{
+                if(jobType.toUpperCase()=="GET"){
+                    //用于生成uuid
+                    function S4() {
+                        return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+                    }
+                    function guid() {
+                        return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+                    }
+                    var uuid = "iframeId:"+guid();
+                    $("#result").append("<iframe id='"+uuid+"'width='100%' height='500px'></iframe></div>");
+                    document.getElementById(uuid).contentWindow.document.write(data.msg);
+                }else{
+                    $("#result").append("<p class='result'>"+data.msg+"</p>");
+                }
+            }
+
+            console.log(data);
+        };
+        //发送错误时，触发
+        websocket.onerror=function(evt){
+            console.log("error");
+
+        };
+        //关闭连接时触发
+        websocket.onclose=function(evt){
+            console.log("close");
+        };
+    })
+    var getUrlParam=function(name){
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var url=decodeURIComponent(window.location.search);
+        var r = url.substr(1).match(reg);
+        if (r != null){
+            return unescape(r[2]);
+        } return null;
+    }
+</script>
+</body>
+</html>
